@@ -125,6 +125,8 @@ st.title("RecurrentGPT")
 
 tabs = st.sidebar.radio("Select Mode", ("Auto-Generation", "Human-in-the-Loop"))
 
+written_paras = ""
+
 if tabs == "Auto-Generation":
     novel_type = st.text_input("Novel Type", value="Science Fiction")
     description = st.text_input("Description")
