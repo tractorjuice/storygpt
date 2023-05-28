@@ -28,7 +28,7 @@ def init_prompt(novel_type, description):
     else:
         description = " about " + description
     return f"""
-Please write a {novel_type} novel{description} with 5 chapters. Follow the format below precisely:
+Please write a {novel_type} novel{description} with 3 chapters. Follow the format below precisely:
 ...
 """
 
