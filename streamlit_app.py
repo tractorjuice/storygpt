@@ -211,7 +211,7 @@ else:
         with st.spinner("Thinking"):
             short_memory, long_memory, written_paras, instruction1, instruction2, instruction3 = init(novel_type, description)
 
-    written_paras = st.text_area("Written Paragraphs (editable)", value=written_paras, height=300, max_chars=2000, key="written_paras")
+    written_paras = st.text_area("Written Paragraphs (editable)", value=written_paras, height=300, max_chars=2000, key="written_paras_key")
     st.markdown("### Memory Module")
     short_memory = st.text_area("Short-Term Memory (editable)", height=100, max_chars=500, value=short_memory, key="short_memory_key")
     long_memory = st.text_area("Long-Term Memory (editable)", height=200, max_chars=1000, value=long_memory, key="long_memory_key")
@@ -227,5 +227,5 @@ else:
 
     if st.button("Next Step"):
         with st.spinner("Thinking"):
-            short_memory, long_memory, written_paras, instruction1, instruction2, instruction3 = controled_step(short_memory, long_memory, selected_instruction, st.session_state.written_paras)
-            st.session_state.short_memory = short_memory
+            st.session_state.short_memory, st.session_state.long_memory, st.session_state.written_paras, st.session_state.instruction1, st.session_state.instruction2,
+                st.session_state.instruction3 = controled_step(short_memory, long_memory, selected_instruction, st.session_state.written_paras)
