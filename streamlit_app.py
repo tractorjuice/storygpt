@@ -136,7 +136,8 @@ def step(short_memory, long_memory, instruction1, instruction2, instruction3, cu
 
     st.session_state['cache'] = cache
     long_memory = [[v] for v in writer.long_memory]
-    return writer.output['output_memory'], long_memory, current_paras + '\n\n' + writer.output['input_paragraph'], human.output['output_instruction'], *writer.output['output_instruction']
+    #return writer.output['output_memory'], long_memory, current_paras + '\n\n' + writer.output['input_paragraph'], human.output['output_instruction'], *writer.output['output_instruction']
+    return writer.output['output_memory'], long_memory, current_paras + '\n\n' + writer.output['input_paragraph'], *writer.output['output_instruction']
 
 def controled_step(short_memory, long_memory, selected_instruction, current_paras):
     cache = st.session_state['cache']
