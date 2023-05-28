@@ -48,6 +48,8 @@ def init(novel_type, description):
         'output_memory': init_paragraphs['Summary'],
         "output_instruction": [init_paragraphs['Instruction 1'], init_paragraphs['Instruction 2'], init_paragraphs['Instruction 3']]
     }
+    
+    st.code(start_input_to_human)
 
     cache["start_input_to_human"] = start_input_to_human
     cache["init_paragraphs"] = init_paragraphs
