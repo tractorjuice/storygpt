@@ -216,12 +216,12 @@ else:
     long_memory = st.text_area("Long-Term Memory (editable)", height=200, max_chars=1000, value=long_memory, key="long_memory")
     
     st.markdown("### Instruction Module")
-    instruction1 = st.text_area("Instruction 1", height=100, max_chars=500, value=instruction1, key="selected_instruction1")
-    instruction2 = st.text_area("Instruction 2", height=100, max_chars=500, value=instruction2, key="selected_instruction2")
-    instruction3 = st.text_area("Instruction 3", height=100, max_chars=500, value=instruction3, key="selected_instruction3")
+    st.session_state.instruction1 = st.text_area("Instruction 1", height=100, max_chars=500, value=instruction1, key="selected_instruction1")
+    st.session_state.instruction2 = st.text_area("Instruction 2", height=100, max_chars=500, value=instruction2, key="selected_instruction2")
+    st.session_state.instruction3 = st.text_area("Instruction 3", height=100, max_chars=500, value=instruction3, key="selected_instruction3")
 
     selected_plan = st.radio("Instruction Selection", ["Instruction 1", "Instruction 2", "Instruction 3"])
-    selected_instruction = on_select(instruction1, instruction2, instruction3, selected_plan)
+    selected_instruction = on_select(st.session_state.instruction1, st.session_state.instruction2, st.session_state.instruction3, selected_plan)
     st.text_area("Selected Instruction (editable)", height=150, max_chars=1000, value=selected_instruction, key="selected_instruction")
 
     if st.button("Next Step"):
