@@ -207,19 +207,19 @@ else:
     novel_type = st.text_input("Novel Type", value="Science Fiction")
     description = st.text_input("Description")
 
-    if st.button("Init Novel Generation"):
+    if st.button("Initialise Novel Generation"):
         with st.spinner("Thinking"):
             short_memory, long_memory, written_paras, instruction1, instruction2, instruction3 = init(novel_type, description)
 
-    written_paras = st.text_area("Written Paragraphs (editable)", value=written_paras, height=300, max_chars=2000, key="written_paras_key")
+    written_paras = st.text_area("Written Paragraphs (editable)", value=st.session_state.written_paras, height=300, max_chars=2000, key="written_paras_key")
     st.markdown("### Memory Module")
-    short_memory = st.text_area("Short-Term Memory (editable)", height=100, max_chars=500, value=short_memory, key="short_memory_key")
-    long_memory = st.text_area("Long-Term Memory (editable)", height=200, max_chars=1000, value=long_memory, key="long_memory_key")
+    st.session_state.short_memory = st.text_area("Short-Term Memory (editable)", height=100, max_chars=500, value=st.session_state.short_memory, key="short_memory_key")
+    st.session_state.long_memory = st.text_area("Long-Term Memory (editable)", height=200, max_chars=1000, value=st.session_state.long_memory, key="long_memory_key")
     
     st.markdown("### Instruction Module")
-    st.session_state.instruction1 = st.text_area("Instruction 1", height=100, max_chars=500, value=instruction1, key="selected_instruction1")
-    st.session_state.instruction2 = st.text_area("Instruction 2", height=100, max_chars=500, value=instruction2, key="selected_instruction2")
-    st.session_state.instruction3 = st.text_area("Instruction 3", height=100, max_chars=500, value=instruction3, key="selected_instruction3")
+    st.session_state.instruction1 = st.text_area("Instruction 1", height=100, max_chars=500, value=st.session_state.instruction1, key="selected_instruction1")
+    st.session_state.instruction2 = st.text_area("Instruction 2", height=100, max_chars=500, value=st.session_state.instruction2, key="selected_instruction2")
+    st.session_state.instruction3 = st.text_area("Instruction 3", height=100, max_chars=500, value=st.session_state.instruction3, key="selected_instruction3")
 
     selected_plan = st.radio("Instruction Selection", ["Instruction 1", "Instruction 2", "Instruction 3"])
     selected_instruction = on_select(st.session_state.instruction1, st.session_state.instruction2, st.session_state.instruction3, selected_plan)
@@ -227,4 +227,4 @@ else:
 
     if st.button("Next Step"):
         with st.spinner("Thinking"):
-            st.session_state.short_memory, st.session_state.long_memory, st.session_state.written_paras, st.session_state.instruction1, st.session_state.instruction2, st.session_state.instruction3 = controled_step(short_memory, long_memory, selected_instruction, st.session_state.written_paras)
+            st.session_state.short_memory, st.session_state.long_memory, st.session_state.written_paras, st.session_state.instruction1, st.session_state.instruction2, st.session_state.instruction3 = controled_step(st.session_state.short_memory, st.session_state.long_memory, selected_instruction, st.session_state.written_paras)
