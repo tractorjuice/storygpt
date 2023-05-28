@@ -227,4 +227,4 @@ else:
 
     if st.button("Next Step"):
         with st.spinner("Thinking"):
-            short_memory, st.session_state.long_memory, st.session_state.written_paras, st.session_state.instruction1, st.session_state.instruction2, st.session_state.instruction3 = controled_step(short_memory, long_memory, selected_instruction, st.session_state.written_paras)
+            short_memory, long_memory, written_paras, instruction1, instruction2, instruction3 = controled_step(short_memory, long_memory, selected_instruction, st.session_state.written_paras)
