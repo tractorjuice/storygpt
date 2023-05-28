@@ -16,6 +16,7 @@ def get_api_response(content: str, max_tokens=None):
         max_tokens=max_tokens
     )
     
+    st.code(response)
     return response['choices'][0]['message']['content']
 
 def get_content_between_a_b(a, b, text):
