@@ -137,7 +137,7 @@ class Human:
         #print(prompt+'\n'+'\n')
 
         response = get_api_response(prompt)
-        self.output = select_plan(response)
+        self.output = self.select_plan(response)
         while self.output == None:
             response = get_api_response(prompt)
             self.output = self.parse_output(response)
