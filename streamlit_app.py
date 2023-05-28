@@ -25,7 +25,9 @@ def init(novel_type, description):
     global CACHE
     # prepare first init
     init_text = init_prompt(novel_type, description)
+    st.write(init_text)
     init_paragraphs = get_init(text=init_text)
+    st.write(init_paragraphs)
 
     start_input_to_human = {
         'output_paragraph': init_paragraphs['Paragraph 3'],
