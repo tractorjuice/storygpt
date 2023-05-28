@@ -207,9 +207,9 @@ if tabs == "Auto-Generation":
     st.session_state.short_memory = st.text_area("Short-Term Memory (editable)", height=100, max_chars=500)
     st.session_state.long_memory = st.text_area("Long-Term Memory (editable)", height=200, max_chars=1000)
     st.markdown("### Instruction Module")   
-    st.session_state.instruction1 = st.text_area("Instruction 1 (editable)", value=st.session_state.instruction1, height=100, max_chars=500, key="picked_instruction1", disabled=True)
-    st.session_state.instruction2 = st.text_area("Instruction 2 (editable)", value=st.session_state.instruction2, height=100, max_chars=500, key="picked_instruction2", disabled=True)
-    st.session_state.instruction3 = st.text_area("Instruction 3 (editable)", value=st.session_state.instruction3, height=100, max_chars=500, key="picked_instruction3", disabled=True)
+    st.session_state.instruction1 = st.text_area("Instruction 1 (editable)", value=st.session_state.instruction1, height=100, max_chars=500, key="picked_instruction1")
+    st.session_state.instruction2 = st.text_area("Instruction 2 (editable)", value=st.session_state.instruction2, height=100, max_chars=500, key="picked_instruction2")
+    st.session_state.instruction3 = st.text_area("Instruction 3 (editable)", value=st.session_state.instruction3, height=100, max_chars=500, key="picked_instruction3")
 
     if st.button("Next Step"):
         with st.spinner("Thinking"):
