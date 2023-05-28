@@ -18,22 +18,22 @@ if 'cache' not in st.session_state:
     st.session_state['cache'] = {}
     
 if 'instruction1' not in st.session_state:
-    st.session_state['cache'] = {}
+    st.session_state['instruction1'] = {}
     
 if 'instruction2' not in st.session_state:
-    st.session_state['cache'] = {}
+    st.session_state['instruction2'] = {}
     
 if 'instruction3' not in st.session_state:
-    st.session_state['cache'] = {}
+    st.session_state['instruction3'] = {}
     
 if 'written_paras' not in st.session_state:
-    st.session_state['cache'] = {}
+    st.session_state['written_paras'] = {}
     
 if 'short_memory' not in st.session_state:
-    st.session_state['cache'] = {}
+    st.session_state['short_memory'] = {}
     
 if 'long_memory' not in st.session_state:
-    st.session_state['cache'] = {}    
+    st.session_state['long_memory'] = {}    
     
 
 def init_prompt(novel_type, description):
