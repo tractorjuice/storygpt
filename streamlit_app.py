@@ -24,7 +24,8 @@ def init(novel_type, description):
         novel_type = "Science Fiction"
     global CACHE
     # prepare first init
-    init_paragraphs = get_init(text=init_prompt(novel_type,description))
+    init_text = init_prompt(novel_type, description)
+    init_paragraphs = get_init(text=init_text)
 
     start_input_to_human = {
         'output_paragraph': init_paragraphs['Paragraph 3'],
