@@ -29,6 +29,7 @@ def get_content_between_a_b(a, b, text):
 def get_init(init_text=None,text=None,response_file=None):
     if not init_text:
         response = get_api_response(text)
+        st.write("get_init response")
         st.text(response)
 
         if response_file:
@@ -57,6 +58,9 @@ def get_init(init_text=None,text=None,response_file=None):
     paragraphs['Summary'] = get_content_between_a_b('Summary:', 'Instruction 1', response)
     paragraphs['Instruction 1'] = get_content_between_a_b('Instruction 1:', 'Instruction 2', response)
     paragraphs['Instruction 2'] = get_content_between_a_b('Instruction 2:', 'Instruction 3', response)
+    
+    st.write("get_init paragraphs")
+    st.code(paragraphs)
     
     lines = response.splitlines()
     
