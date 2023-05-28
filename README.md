@@ -5,6 +5,8 @@ This Streamlit application allows users to interact with a chatbot trained on GP
 ## Features
 
 - Retrieve a Wardley Map based on its ID.
+- Fetch a Wardley Map based on a predefined list of IDs.
+- Get a Wardley Map from a GitHub repository
 - Interact with a GPT-4 based chatbot to ask questions and receive insights about the Wardley Map.
 - Display generated responses from the chatbot.
 - Download chat transcripts and generated documents as separate files.
