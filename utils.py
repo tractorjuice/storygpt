@@ -21,7 +21,7 @@ def get_api_response(content: str, max_tokens=None):
 def get_content_between_a_b(a, b, text):
     return re.search(f"{a}(.*?)\n{b}", text, re.DOTALL).group(1).strip()
 
-def get_init(init_text, text, response_file=None):
+def get_init(init_text=None,text=None,response_file=None):
     if not init_text:
         response = get_api_response(text)
         print(response)
