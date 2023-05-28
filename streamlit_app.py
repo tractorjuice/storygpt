@@ -135,6 +135,7 @@ def step(short_memory, long_memory, instruction1, instruction2, instruction3, cu
 
 
 def controled_step(short_memory, long_memory, selected_instruction, current_paras):
+    cache = st.session_state['cache']
     if current_paras == "":
         return "", "", "", "", "", ""
 
