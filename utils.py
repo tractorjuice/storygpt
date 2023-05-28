@@ -6,6 +6,7 @@ def get_api_response(content: str, max_tokens=None):
     OPENAI_API_KEY = st.secrets["OPENAI_API_KEY"]
     openai = ChatCompletion(api_key=OPENAI_API_KEY)
     
+    st.write("Content")
     st.code(content)
     
     response = openai.create(
@@ -18,6 +19,7 @@ def get_api_response(content: str, max_tokens=None):
         max_tokens=max_tokens
     )
     
+    st.write("Response")
     st.code(response)
     return response['choices'][0]['message']['content']
 
