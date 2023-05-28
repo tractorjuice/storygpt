@@ -37,9 +37,12 @@ def init(novel_type, description):
         novel_type = "Science Fiction"
     cache = st.session_state['cache']
     # prepare first init
+    
     init_text = init_prompt(novel_type, description)
+    st.write("init_text")
     st.text(init_text)
     init_paragraphs = get_init(text=init_text)
+    st.write("init_paragraphs")
     st.text(init_paragraphs)
 
     start_input_to_human = {
@@ -49,6 +52,7 @@ def init(novel_type, description):
         "output_instruction": [init_paragraphs['Instruction 1'], init_paragraphs['Instruction 2'], init_paragraphs['Instruction 3']]
     }
     
+    st.write("start_input_to_human")
     st.code(start_input_to_human)
 
     cache["start_input_to_human"] = start_input_to_human
