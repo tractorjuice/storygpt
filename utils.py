@@ -24,7 +24,7 @@ def get_content_between_a_b(a, b, text):
 def get_init(init_text=None,text=None,response_file=None):
     if not init_text:
         response = get_api_response(text)
-        print(response)
+        st.write(response)
 
         if response_file:
             with open(response_file, 'a', encoding='utf-8') as f:
