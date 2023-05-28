@@ -55,13 +55,11 @@ class Human:
     """
         return input_text
     
-    def parse_plan(self,response):
+    def parse_plan(self, response):
         plan = get_content_between_a_b('Selected Plan:','Reason',response)
         return plan
 
-
-    def select_plan(self,response_file):
-        
+    def select_plan(self):
         previous_paragraph = self.input["input_paragraph"]
         writer_new_paragraph = self.input["output_paragraph"]
         memory = self.input["output_memory"]
