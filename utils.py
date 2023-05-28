@@ -6,7 +6,7 @@ def get_api_response(content: str, max_tokens=None):
     OPENAI_API_KEY = st.secrets["OPENAI_API_KEY"]
     openai = ChatCompletion(api_key=OPENAI_API_KEY)
     
-    print(content)
+    #print(content)
     
     try:
         response = openai.create(
@@ -21,7 +21,7 @@ def get_api_response(content: str, max_tokens=None):
     except:
         st.error("OpenAI Error")
     
-    print(response)
+    #print(response)
     return response['choices'][0]['message']['content']
 
 def get_content_between_a_b(a, b, text):
@@ -30,7 +30,7 @@ def get_content_between_a_b(a, b, text):
 def get_init(init_text=None,text=None,response_file=None):
     if not init_text:
         response = get_api_response(text)
-        print(response)
+        #print(response)
 
         if response_file:
             with open(response_file, 'a', encoding='utf-8') as f:
@@ -59,7 +59,7 @@ def get_init(init_text=None,text=None,response_file=None):
     paragraphs['Instruction 1'] = get_content_between_a_b('Instruction 1:', 'Instruction 2', response)
     paragraphs['Instruction 2'] = get_content_between_a_b('Instruction 2:', 'Instruction 3', response)
     
-    print(paragraphs)
+    #print(paragraphs)
     
     lines = response.splitlines()
     
