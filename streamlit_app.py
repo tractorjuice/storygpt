@@ -194,7 +194,7 @@ with st.sidebar:
     st.write(f"Total Cost: ${round(st.session_state['total_tokens_used'] * 0.06 / 1000, 2)}")
     st.markdown(html_temp.format("rgba(55, 53, 47, 0.16)"),unsafe_allow_html=True)
     st.markdown("## Select Wardley Map") 
-    tabs = radio("Select Mode", ("Human-in-the-Loop", "Auto-Generation", ))
+    tabs = st.radio("Select Mode", ("Human-in-the-Loop", "Auto-Generation", ))
     
 if tabs == "Auto-Generation":
     novel_type = st.text_input("Novel Type", value="Science Fiction")
