@@ -210,7 +210,7 @@ else:
     if st.button("Init Novel Generation"):
         short_memory, long_memory, written_paras, instruction1, instruction2, instruction3 = init(novel_type, description)
 
-    written_paras = st.text_area("Written Paragraphs (editable)", value=written_paras, height=300, max_chars=2000)
+    st.session_state.written_paras = st.text_area("Written Paragraphs (editable)", value=written_paras, height=300, max_chars=2000, key="written_paras")
     st.markdown("### Memory Module")
     short_memory = st.text_area("Short-Term Memory (editable)", height=100, max_chars=500, value=short_memory, key="short_memory")
     long_memory = st.text_area("Long-Term Memory (editable)", height=200, max_chars=1000, value=long_memory, key="long_memory")
@@ -225,4 +225,4 @@ else:
     st.text_area("Selected Instruction (editable)", height=150, max_chars=1000, value=selected_instruction, key="selected_instruction")
 
     if st.button("Next Step"):
-        st.session_state.instruction3short_memory, st.session_state.instruction3long_memory, st.session_state.instruction3written_paras, st.session_state.instruction3instruction1, st.session_state.instruction3instruction2, st.session_state.instruction3 = controled_step(short_memory, long_memory, selected_instruction, written_paras)
+        st.session_state.short_memory, st.session_state.long_memory, st.session_state.written_paras, st.session_state.instruction1, st.session_state.instruction2, st.session_state.instruction3 = controled_step(short_memory, long_memory, selected_instruction, st.session_state.written_paras)
