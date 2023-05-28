@@ -187,7 +187,7 @@ if tabs == "Auto-Generation":
     if st.button("Init Novel Generation"):
         session_state.short_memory, session_state.long_memory, session_state.written_paras, session_state.instruction1, session_state.instruction2, session_state.instruction3 = init(novel_type, description)
 
-    st.text_area("Written Paragraphs (editable)", value=session_state.written_paras, height=300, max_chars=2000)
+    st.text_area("Written Paragraphs (editable)", value=st.session_state.written_paras, height=300, max_chars=2000)
     st.markdown("### Memory Module")
     short_memory = st.text_area("Short-Term Memory (editable)", height=100, max_chars=500)
     session_state.long_memory = st.text_area("Long-Term Memory (editable)", height=200, max_chars=1000)
