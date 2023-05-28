@@ -59,7 +59,7 @@ class Human:
         plan = get_content_between_a_b('Selected Plan:','Reason',response)
         return plan
 
-    def select_plan(self, response, response_file=none):
+    def select_plan(self, response, response_file=None):
         previous_paragraph = self.input["input_paragraph"]
         writer_new_paragraph = self.input["output_paragraph"]
         memory = self.input["output_memory"]
