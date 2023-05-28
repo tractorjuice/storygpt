@@ -91,7 +91,7 @@ class Human:
     Reason:
     <Explain why you choose the plan>
     """
-        print(prompt+'\n'+'\n')
+        #print(prompt+'\n'+'\n')
 
         response = get_api_response(prompt)
 
@@ -134,7 +134,7 @@ class Human:
     def step(self, response_file=None):
 
         prompt = self.prepare_input()
-        print(prompt+'\n'+'\n')
+        #print(prompt+'\n'+'\n')
 
         response = get_api_response(prompt)
         self.output = self.parse_output(response)
@@ -148,7 +148,7 @@ class Human:
     def step_with_edit(self, response_file=None):
 
         prompt = self.prepare_input()
-        print(prompt+'\n'+'\n')
+        #print(prompt+'\n'+'\n')
 
         response = get_api_response(prompt)
         self.output = self.parse_output(response)
