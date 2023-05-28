@@ -139,8 +139,8 @@ def on_select(instruction1, instruction2, instruction3, value):
     return selected_plan
 
 
+st.set_page_config(page_title="Wardley Map Novel", layout="wide") 
 st.title("RecurrentGPT")
-
 tabs = st.sidebar.radio("Select Mode", ("Auto-Generation", "Human-in-the-Loop"))
 
 written_paras = ""
