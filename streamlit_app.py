@@ -174,12 +174,6 @@ def on_select(instruction1, instruction2, instruction3, value):
     return selected_plan
 
 cache = st.session_state['cache']
-short_memory = st.session_state['short_memory']
-long_memory = st.session_state['long_memory']
-written_paras = st.session_state['written_paras']
-instruction1 = st.session_state['instruction1']
-instruction2 = st.session_state['instruction2']
-instruction3 = st.session_state['instruction3']
 
 tabs = st.sidebar.radio("Select Mode", ("Human-in-the-Loop", "Auto-Generation", ))
 if tabs == "Auto-Generation":
@@ -209,7 +203,7 @@ else:
 
     if st.button("Initialise Novel Generation"):
         with st.spinner("Thinking"):
-            short_memory, long_memory, written_paras, instruction1, instruction2, instruction3 = init(novel_type, description)
+            st.session_state.short_memory, st.session_state.long_memory, st.session_state.written_paras, st.session_state.instruction1, st.session_state.instruction2, st.session_state.instruction3 = init(novel_type, description)
 
     written_paras = st.text_area("Written Paragraphs (editable)", value=st.session_state.written_paras, height=300, max_chars=2000, key="written_paras_key")
     st.markdown("### Memory Module")
