@@ -199,7 +199,7 @@ if tabs == "Auto-Generation":
     novel_type = st.text_input("Novel Type", value="Science Fiction")
     description = st.text_input("Description")
 
-    if st.button("Init Novel Generation"):
+    if st.button("Initialise Novel Generation"):
         with st.spinner("Thinking"):
             st.session_state.short_memory, st.session_state.long_memory, st.session_state.written_paras, st.session_state.instruction1, st.session_state.instruction2, st.session_state.instruction3 = init(novel_type, description)
 
