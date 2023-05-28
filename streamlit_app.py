@@ -4,6 +4,8 @@ from utils import get_init, parse_instructions
 from human_simulator import Human
 from recurrentgpt import RecurrentGPT
 
+st.set_page_config(page_title="Wardley Map Novel", layout="wide") 
+
 instruction1 = ""
 instruction2 = ""
 instruction3 = ""
@@ -138,8 +140,6 @@ def on_select(instruction1, instruction2, instruction3, value):
     selected_plan = [instruction1, instruction2, instruction3][selected_plan-1]
     return selected_plan
 
-
-st.set_page_config(page_title="Wardley Map Novel", layout="wide") 
 st.title("RecurrentGPT")
 tabs = st.sidebar.radio("Select Mode", ("Auto-Generation", "Human-in-the-Loop"))
 
