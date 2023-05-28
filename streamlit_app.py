@@ -50,7 +50,7 @@ def init_prompt(novel_type, description):
     else:
         description = " about " + description
     return f"""
-Please write a {novel_type} novel{description} with 3 chapters. Follow the format below precisely:
+Please write a {novel_type} novel{description} with 50 chapters. Follow the format below precisely:
 
 Begin with the name of the novel.
 Next, write an outline for the first chapter. The outline should describe the background and the beginning of the novel.
