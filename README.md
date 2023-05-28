@@ -22,22 +22,22 @@ This Streamlit application allows users to interact with a chatbot trained on GP
 
 1. Clone the repository:
 
-git clone https://github.com/yourusername/wardley-insight-report.git
+`git clone https://github.com/yourusername/wardley-insight-report.git`
 
 2. Install the required dependencies:
 
-'.pip install -r requirements.txt
+`.pip install -r requirements.txt`
 
 3. Set up your OpenAI API key as a secret:
 
 Create a file named `.streamlit/secrets.toml` in your project directory and add your OpenAI API key:
 
 [general]
-'.OPENAI_API_KEY = "your_openai_api_key_here"'
+`.OPENAI_API_KEY = "your_openai_api_key_here"`
 
 4. Run the Streamlit application:
 
-'.streamlit run app.py'
+`.streamlit run app.py`
 
 [![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://wardleyinsightreport.streamlit.app/)
 
