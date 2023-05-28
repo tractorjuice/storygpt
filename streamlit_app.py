@@ -193,4 +193,4 @@ else:
 
     selected_instruction = on_select(instruction1, instruction2, instruction3, selected_plan)
 
-    st.text_area("Selected Instruction (editable)", value=selected_instruction, height=150, max_chars=1000)
+    st.text_area("Selected Instruction (editable)", height=150, max_chars=1000, value=selected_instruction, key="selected_instruction") 
