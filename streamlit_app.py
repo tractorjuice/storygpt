@@ -213,8 +213,8 @@ else:
 
     written_paras = st.text_area("Written Paragraphs (editable)", value=written_paras, height=300, max_chars=2000, key="written_paras")
     st.markdown("### Memory Module")
-    short_memory = st.text_area("Short-Term Memory (editable)", height=100, max_chars=500, value=short_memory, key="short_memory")
-    long_memory = st.text_area("Long-Term Memory (editable)", height=200, max_chars=1000, value=long_memory, key="long_memory")
+    short_memory = st.text_area("Short-Term Memory (editable)", height=100, max_chars=500, value=short_memory, key="short_memory_key")
+    long_memory = st.text_area("Long-Term Memory (editable)", height=200, max_chars=1000, value=long_memory, key="long_memory_key")
     
     st.markdown("### Instruction Module")
     st.session_state.instruction1 = st.text_area("Instruction 1", height=100, max_chars=500, value=instruction1, key="selected_instruction1")
