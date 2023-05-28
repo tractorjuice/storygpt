@@ -56,11 +56,11 @@ def init(novel_type, description):
     # prepare first init
     
     init_text = init_prompt(novel_type, description)
-    st.write("init_text")
-    st.text(init_text)
+    #st.write("init_text")
+    #st.text(init_text)
     init_paragraphs = get_init(text=init_text)
-    st.write("init_paragraphs")
-    st.text(init_paragraphs)
+    #st.write("init_paragraphs")
+    #st.text(init_paragraphs)
 
     start_input_to_human = {
         'output_paragraph': init_paragraphs['Paragraph 3'],
@@ -198,12 +198,12 @@ else:
 
     st.text_area("Written Paragraphs (editable)", value=written_paras, height=300, max_chars=2000)
     st.markdown("### Memory Module")
-    short_memory = st.text_area("Short-Term Memory (editable)", height=100, max_chars=500)
-    long_memory = st.text_area("Long-Term Memory (editable)", height=200, max_chars=1000)
+    short_memory = st.text_area("Short-Term Memory (editable)", height=100, max_chars=500, value=short_memory, key="short_memory")
+    long_memory = st.text_area("Long-Term Memory (editable)", height=200, max_chars=1000, value=long_memory, key="long_memory")
     st.markdown("### Instruction Module")
-    instruction1 = st.text_area("Instruction 1", height=100, max_chars=500, value=instruction1, key="selected_instruction1", disabled=True)
-    instruction2 = st.text_area("Instruction 2", height=100, max_chars=500, value=instruction2, key="selected_instruction2", disabled=True)
-    instruction3 = st.text_area("Instruction 3", height=100, max_chars=500, value=instruction3, key="selected_instruction3", disabled=True)
+    instruction1 = st.text_area("Instruction 1", height=100, max_chars=500, value=instruction1, key="selected_instruction1")
+    instruction2 = st.text_area("Instruction 2", height=100, max_chars=500, value=instruction2, key="selected_instruction2")
+    instruction3 = st.text_area("Instruction 3", height=100, max_chars=500, value=instruction3, key="selected_instruction3")
 
     selected_plan = st.radio("Instruction Selection", ["Instruction 1", "Instruction 2", "Instruction 3"])
     selected_instruction = st.text_area("Selected Instruction (editable)", height=150, max_chars=1000)
