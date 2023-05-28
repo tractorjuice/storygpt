@@ -10,6 +10,8 @@ instruction1 = ""
 instruction2 = ""
 instruction3 = ""
 written_paras = ""
+short_memory = ""
+long_memory = ""
 
 @st.cache_resource
 def load_sentence_transformer_model():
