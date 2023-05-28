@@ -211,11 +211,9 @@ else:
     
     short_memory = st.session_state.short_memory
     short_memory = st.text_area("Short-Term Memory (editable)", height=100, max_chars=500, value=short_memory, key="short_memory")
-    st.session_state.short_memory = short_memory
     
     long_memory = st.session_state.long_memory
     long_memory = st.text_area("Long-Term Memory (editable)", height=200, max_chars=1000, value=long_memory, key="long_memory")
-    st.session_state.long_memory = long_memory
     
     st.markdown("### Instruction Module")
     st.session_state.instruction1 = st.text_area("Instruction 1", height=100, max_chars=500, value=st.session_state.instruction1, key="selected_instruction1")
@@ -226,6 +224,8 @@ else:
     selected_instruction = st.text_area("Selected Instruction (editable)", height=150, max_chars=1000)
 
     if st.button("Next Step"):
+        st.session_state.short_memory = short_memory
+        st.session_state.long_memory = long_memory
         st.session_state.short_memory, st.session_state.long_memory, st.session_state.written_paras, st.session_state.instruction1, st.session_state.instruction2, st.session_state.instruction3 = controled_step(short_memory, st.session_state.long_memory, selected_instruction, written_paras)
 
     selected_instruction = on_select(st.session_state.instruction1, st.session_state.instruction2, st.session_state.instruction3, selected_plan)
