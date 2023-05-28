@@ -12,6 +12,7 @@ class Human:
         self.embedder = embedder
         self.output = {}
 
+
     def prepare_input(self):
         previous_paragraph = self.input["input_paragraph"]
         writer_new_paragraph = self.input["output_paragraph"]
@@ -19,7 +20,7 @@ class Human:
         user_edited_plan = self.input["output_instruction"]
 
         input_text = f"""
-        Now imagine you are a novelist writing a novel with the help of ChatGPT. You will be given a previously written paragraph (wrote by you), and a paragraph written by your ChatGPT assistant, a summary of the main storyline maintained by your ChatGPT assistant, and a plan of what to write next proposed by your ChatGPT assistant.
+        Now imagine you are a novelist writing a Chinese novel with the help of ChatGPT. You will be given a previously written paragraph (wrote by you), and a paragraph written by your ChatGPT assistant, a summary of the main storyline maintained by your ChatGPT assistant, and a plan of what to write next proposed by your ChatGPT assistant.
     I need you to write:
     1. Extended Paragraph: Extend the new paragraph written by the ChatGPT assistant to twice the length of the paragraph written by your ChatGPT assistant.
     2. Selected Plan: Copy the plan proposed by your ChatGPT assistant.
@@ -57,6 +58,7 @@ class Human:
     def parse_plan(self,response):
         plan = get_content_between_a_b('Selected Plan:','Reason',response)
         return plan
+
 
     def select_plan(self,response_file):
         
@@ -132,14 +134,12 @@ class Human:
     def step(self, response_file=None):
 
         prompt = self.prepare_input()
-        st.text(prompt+'\n'+'\n')
+        print(prompt+'\n'+'\n')
 
         response = get_api_response(prompt)
-        st.text(response)
         self.output = self.parse_output(response)
         while self.output == None:
             response = get_api_response(prompt)
-            st.text(response)
             self.output = self.parse_output(response)
         if response_file:
             with open(response_file, 'a', encoding='utf-8') as f:
