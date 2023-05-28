@@ -189,7 +189,8 @@ if tabs == "Auto-Generation":
     description = st.text_input("Description")
 
     if st.button("Init Novel Generation"):
-        short_memory, long_memory, written_paras, instruction1, instruction2, instruction3 = init(novel_type, description)
+        while st.spinner:
+            short_memory, long_memory, written_paras, instruction1, instruction2, instruction3 = init(novel_type, description)
 
     st.text_area("Written Paragraphs (editable)", value=written_paras, height=300, max_chars=2000)
     st.markdown("### Memory Module")
@@ -201,14 +202,15 @@ if tabs == "Auto-Generation":
     instruction3 = st.text_area("Instruction 3 (editable)", value=instruction3, height=100, max_chars=500, key="instruction3", disabled=True)
 
     if st.button("Next Step"):
-        short_memory, long_memory, written_paras, instruction1, instruction2, instruction3 = step(short_memory, long_memory, instruction1, instruction2, instruction3, written_paras)
+        while st.spinner:
+            short_memory, long_memory, written_paras, instruction1, instruction2, instruction3 = step(short_memory, long_memory, instruction1, instruction2, instruction3, written_paras)
 
 else:
     novel_type = st.text_input("Novel Type", value="Science Fiction")
     description = st.text_input("Description")
 
     if st.button("Init Novel Generation"):
-        why st.spinner:
+        while st.spinner:
             short_memory, long_memory, written_paras, instruction1, instruction2, instruction3 = init(novel_type, description)
 
     written_paras = st.text_area("Written Paragraphs (editable)", value=written_paras, height=300, max_chars=2000, key="written_paras")
