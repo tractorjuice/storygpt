@@ -144,7 +144,7 @@ def controled_step(short_memory, long_memory, selected_instruction, current_para
     if current_paras == "":
         return "", "", "", "", "", ""
 
-    if "writer" not in st.session_state['cache']:
+    if "writer" not in cache:
         cache = st.session_state['cache']
         start_input_to_human = cache["start_input_to_human"]
         start_input_to_human['output_instruction'] = selected_instruction
