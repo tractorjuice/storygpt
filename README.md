@@ -30,9 +30,8 @@ This Streamlit application allows users to interact with a chatbot trained on GP
 
 3. Set up your OpenAI API key as a secret:
 
-Create a file named `.streamlit/secrets.toml` in your project directory and add your OpenAI API key:
+Add your OpenAI API Key to the Streamlit secrets within the administration interface:
 
-[general]
 `OPENAI_API_KEY = "your_openai_api_key_here"`
 
 4. Run the Streamlit application:
