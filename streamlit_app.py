@@ -197,8 +197,7 @@ if tabs == "Auto-Generation":
     instruction3 = st.text_area("Instruction 3 (editable)", height=100, max_chars=500, value=st.session_state.instruction3, key="instruction3", disabled=True)
 
     if st.button("Next Step"):
-        st.session_state.short_memory, st.session_state.long_memory, st.session_state.written_paras, st.session_state.instruction1, st.session_state.instruction2, st.session_state.instruction3 = step(short_memory, st.session_state.long_memory, instruction1, instruction2, instruction3, written_paras)
-
+        st.session_state.short_memory, st.session_state.long_memory, st.session_state.written_paras, st.session_state.instruction1, st.session_state.instruction2, st.session_state.instruction3 = step(st.session_state.short_memory, st.session_state.long_memory, st.session_state.instruction1, st.session_state.instruction2, st.session_state.instruction3, st.session_state.written_paras)
 
 else:
     novel_type = st.text_input("Novel Type", value="Science Fiction")
