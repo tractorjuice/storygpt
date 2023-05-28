@@ -144,3 +144,18 @@ class Human:
         if response_file:
             with open(response_file, 'a', encoding='utf-8') as f:
                 f.write(f"Human's output here:\n{response}\n\n")
+                
+    def step_with_edit(self, response_file=None):
+
+        prompt = self.prepare_input()
+        print(prompt+'\n'+'\n')
+
+        response = get_api_response(prompt)
+        self.output = self.parse_output(response)
+        while self.output == None:
+            response = get_api_response(prompt)
+            self.output = self.parse_output(response)
+        if response_file:
+            with open(response_file, 'a', encoding='utf-8') as f:
+                f.write(f"Human's output here:\n{response}\n\n")
+
