@@ -7,7 +7,8 @@ from recurrentgpt import RecurrentGPT
 # Build the semantic search model
 embedder = SentenceTransformer('multi-qa-mpnet-base-cos-v1')
 
-CACHE = {}
+if 'cache' not in st.session_state:
+    st.session_state['cache'] = {}
 
 def init_prompt(novel_type, description):
     if description == "":
@@ -22,7 +23,7 @@ Please write a {novel_type} novel{description} with 50 chapters. Follow the form
 def init(novel_type, description):
     if novel_type == "":
         novel_type = "Science Fiction"
-    global CACHE
+    cache = st.session_state['cache']
     # prepare first init
     init_text = init_prompt(novel_type, description)
     st.write(init_text)
@@ -36,8 +37,9 @@ def init(novel_type, description):
         "output_instruction": [init_paragraphs['Instruction 1'], init_paragraphs['Instruction 2'], init_paragraphs['Instruction 3']]
     }
 
-    CACHE["start_input_to_human"] = start_input_to_human
-    CACHE["init_paragraphs"] = init_paragraphs
+    cache["start_input_to_human"] = start_input_to_human
+    cache["init_paragraphs"] = init_paragraphs
+    st.session_state['cache'] = cache
 
     written_paras = f"""Title: {init_paragraphs['name']}
 Outline: {init_paragraphs['Outline']}
@@ -51,11 +53,12 @@ def step(short_memory, long_memory, instruction1, instruction2, instruction3, cu
     if current_paras == "":
         return "", "", "", "", "", ""
 
-    if "writer" not in CACHE:
-        start_input_to_human = CACHE["start_input_to_human"]
+    if "writer" not in st.session_state['cache']:
+        cache = st.session_state['cache']
+        start_input_to_human = cache["start_input_to_human"]
         start_input_to_human['output_instruction'] = [
             instruction1, instruction2, instruction3]
-        init_paragraphs = CACHE["init_paragraphs"]
+        init_paragraphs = cache["init_paragraphs"]
         human = Human(input=start_input_to_human,
                       memory=None, embedder=embedder)
         human.step()
@@ -65,12 +68,12 @@ def step(short_memory, long_memory, instruction1, instruction2, instruction3, cu
         # Init writerGPT
         writer = RecurrentGPT(input=writer_start_input, short_memory=start_short_memory, long_memory=[
             init_paragraphs['Paragraph 1'], init_paragraphs['Paragraph 2']], memory_index=None, embedder=embedder)
-        CACHE["writer"] = writer
-        CACHE["human"] = human
+        cache["writer"] = writer
+        cache["human"] = human
         writer.step()
     else:
-        human = CACHE["human"]
-        writer = CACHE["writer"]
+        human = cache["human"]
+        writer = cache["writer"]
         output = writer.output
         output['output_memory'] = short_memory
         output['output_instruction'] = [
@@ -80,6 +83,7 @@ def step(short_memory, long_memory, instruction1, instruction2, instruction3, cu
         writer.input = human.output
         writer.step()
 
+    st.session_state['cache'] = cache
     long_memory = [[v] for v in writer.long_memory]
     return writer.output['output_memory'], long_memory, current_paras + '\n\n' + writer.output['input_paragraph'], human.output['output_instruction'], *writer.output['output_instruction']
 
@@ -88,10 +92,11 @@ def controled_step(short_memory, long_memory, selected_instruction, current_para
     if current_paras == "":
         return "", "", "", "", "", ""
 
-    if "writer" not in CACHE:
-        start_input_to_human = CACHE["start_input_to_human"]
+    if "writer" not in st.session_state['cache']:
+        cache = st.session_state['cache']
+        start_input_to_human = cache["start_input_to_human"]
         start_input_to_human['output_instruction'] = selected_instruction
-        init_paragraphs = CACHE["init_paragraphs"]
+        init_paragraphs = cache["init_paragraphs"]
         human = Human(input=start_input_to_human,
                       memory=None, embedder=embedder)
         human.step_with_edit()
@@ -101,12 +106,12 @@ def controled_step(short_memory, long_memory, selected_instruction, current_para
         # Init writerGPT
         writer = RecurrentGPT(input=writer_start_input, short_memory=start_short_memory, long_memory=[
             init_paragraphs['Paragraph 1'], init_paragraphs['Paragraph 2']], memory_index=None, embedder=embedder)
-        CACHE["writer"] = writer
-        CACHE["human"] = human
+        cache["writer"] = writer
+        cache["human"] = human
         writer.step()
     else:
-        human = CACHE["human"]
-        writer = CACHE["writer"]
+        human = cache["human"]
+        writer = cache["writer"]
         output = writer.output
         output['output_memory'] = short_memory
         output['output_instruction'] = selected_instruction
@@ -114,7 +119,8 @@ def controled_step(short_memory, long_memory, selected_instruction, current_para
         human.step_with_edit()
         writer.input = human.output
         writer.step()
-
+        
+    cache = st.session_state['cache']
     return writer.output['output_memory'], parse_instructions(writer.long_memory), current_paras + '\n\n' + writer.output['input_paragraph'], *writer.output['output_instruction']
 
 
