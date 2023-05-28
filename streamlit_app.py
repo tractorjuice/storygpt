@@ -6,13 +6,6 @@ from recurrentgpt import RecurrentGPT
 
 st.set_page_config(page_title="Wardley Map Novel", layout="wide") 
 
-instruction1 = ""
-instruction2 = ""
-instruction3 = ""
-written_paras = ""
-short_memory = ""
-long_memory = ""
-
 @st.cache_resource
 def load_sentence_transformer_model():
     return SentenceTransformer('multi-qa-mpnet-base-cos-v1')
@@ -23,6 +16,25 @@ embedder = load_sentence_transformer_model()
 
 if 'cache' not in st.session_state:
     st.session_state['cache'] = {}
+    
+if 'instruction1' not in st.session_state:
+    st.session_state['cache'] = {}
+    
+if 'instruction2' not in st.session_state:
+    st.session_state['cache'] = {}
+    
+if 'instruction3' not in st.session_state:
+    st.session_state['cache'] = {}
+    
+if 'written_paras' not in st.session_state:
+    st.session_state['cache'] = {}
+    
+if 'short_memory' not in st.session_state:
+    st.session_state['cache'] = {}
+    
+if 'long_memory' not in st.session_state:
+    st.session_state['cache'] = {}    
+    
 
 def init_prompt(novel_type, description):
     if description == "":
@@ -172,12 +184,12 @@ if tabs == "Auto-Generation":
     description = st.text_input("Description")
 
     if st.button("Init Novel Generation"):
-        short_memory, long_memory, written_paras, instruction1, instruction2, instruction3 = init(novel_type, description)
+        short_memory, session_state.long_memory, written_paras, instruction1, instruction2, instruction3 = init(novel_type, description)
 
     st.text_area("Written Paragraphs (editable)", value=written_paras, height=300, max_chars=2000)
     st.markdown("### Memory Module")
     short_memory = st.text_area("Short-Term Memory (editable)", height=100, max_chars=500)
-    long_memory = st.text_area("Long-Term Memory (editable)", height=200, max_chars=1000)
+    session_state.long_memory = st.text_area("Long-Term Memory (editable)", height=200, max_chars=1000)
     st.markdown("### Instruction Module")
     #instruction1 = st.text_area("Instruction 1 (editable)", height=100, max_chars=500)
     #instruction2 = st.text_area("Instruction 2 (editable)", height=100, max_chars=500)
@@ -188,7 +200,7 @@ if tabs == "Auto-Generation":
     instruction3 = st.text_area("Instruction 3 (editable)", height=100, max_chars=500, value=instruction3, key="instruction3", disabled=True)
 
     if st.button("Next Step"):
-        short_memory, long_memory, written_paras, instruction1, instruction2, instruction3 = step(short_memory, long_memory, instruction1, instruction2, instruction3, written_paras)
+        short_memory, session_state.long_memory, written_paras, instruction1, instruction2, instruction3 = step(short_memory, session_state.long_memory, instruction1, instruction2, instruction3, written_paras)
 
 
 else:
@@ -196,12 +208,12 @@ else:
     description = st.text_input("Description")
 
     if st.button("Init Novel Generation"):
-        short_memory, long_memory, written_paras, instruction1, instruction2, instruction3 = init(novel_type, description)
+        short_memory, session_state.long_memory, written_paras, instruction1, instruction2, instruction3 = init(novel_type, description)
 
     st.text_area("Written Paragraphs (editable)", value=written_paras, height=300, max_chars=2000)
     st.markdown("### Memory Module")
     short_memory = st.text_area("Short-Term Memory (editable)", height=100, max_chars=500, value=short_memory, key="short_memory")
-    long_memory = st.text_area("Long-Term Memory (editable)", height=200, max_chars=1000, value=long_memory, key="long_memory")
+    session_state.long_memory = st.text_area("Long-Term Memory (editable)", height=200, max_chars=1000, value=session_state.long_memory, key="long_memory")
     st.markdown("### Instruction Module")
     instruction1 = st.text_area("Instruction 1", height=100, max_chars=500, value=instruction1, key="selected_instruction1")
     instruction2 = st.text_area("Instruction 2", height=100, max_chars=500, value=instruction2, key="selected_instruction2")
@@ -211,7 +223,7 @@ else:
     selected_instruction = st.text_area("Selected Instruction (editable)", height=150, max_chars=1000)
 
     if st.button("Next Step"):
-        short_memory, long_memory, written_paras, instruction1, instruction2, instruction3 = controled_step(short_memory, long_memory, selected_instruction, written_paras)
+        short_memory, session_state.long_memory, written_paras, instruction1, instruction2, instruction3 = controled_step(short_memory, session_state.long_memory, selected_instruction, written_paras)
 
     selected_instruction = on_select(instruction1, instruction2, instruction3, selected_plan)
 
