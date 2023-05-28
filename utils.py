@@ -9,15 +9,18 @@ def get_api_response(content: str, max_tokens=None):
     st.write("Content")
     st.code(content)
     
-    response = openai.create(
-        model='gpt-3.5-turbo',
-        messages=[
-            {'role': 'system', 'content': 'You are a helpful and creative assistant for writing novels.'},
-            {'role': 'user', 'content': content}
-        ],
-        temperature=0.5,
-        max_tokens=max_tokens
-    )
+    try:
+        response = openai.create(
+            model='gpt-3.5-turbo',
+            messages=[
+                {'role': 'system', 'content': 'You are a helpful and creative assistant for writing novels.'},
+                {'role': 'user', 'content': content}
+            ],
+            temperature=0.5,
+            max_tokens=max_tokens
+        )
+    except:
+        st.error("OpenAI Error")
     
     st.write("Response")
     st.code(response)
