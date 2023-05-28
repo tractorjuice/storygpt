@@ -1,7 +1,7 @@
 from utils import get_content_between_a_b, get_api_response
 import torch
 import random
-from sentence_transformers import  util
+from sentence_transformers import util
 
 class RecurrentGPT:
 
