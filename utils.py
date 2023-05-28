@@ -1,8 +1,11 @@
 import re
 import openai
+import streamlit as st
 
 def get_api_response(content: str, max_tokens=None):
-
+    
+    OPENAI_API_KEY = st.secrets["OPENAI_API_KEY"]
+    
     response = openai.ChatCompletion.create(
         model='gpt-3.5-turbo',
         messages=[{
