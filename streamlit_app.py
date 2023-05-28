@@ -64,6 +64,7 @@ Make sure to be precise and follow the output format strictly.
 """
 
 def init(novel_type, description):
+    written_paras = ""
     if novel_type == "":
         novel_type = "Science Fiction"
     cache = st.session_state['cache']
