@@ -80,6 +80,7 @@ def step(short_memory, long_memory, instruction1, instruction2, instruction3, cu
     long_memory = [[v] for v in writer.long_memory]
     return writer.output['output_memory'], long_memory, current_paras + '\n\n' + writer.output['input_paragraph'], human.output['output_instruction'], *writer.output['output_instruction']
 
+
 def controled_step(short_memory, long_memory, selected_instruction, current_paras):
     if current_paras == "":
         return "", "", "", "", "", ""
@@ -113,10 +114,12 @@ def controled_step(short_memory, long_memory, selected_instruction, current_para
 
     return writer.output['output_memory'], parse_instructions(writer.long_memory), current_paras + '\n\n' + writer.output['input_paragraph'], *writer.output['output_instruction']
 
+
 def on_select(instruction1, instruction2, instruction3, value):
     selected_plan = int(value.replace("Instruction ", ""))
     selected_plan = [instruction1, instruction2, instruction3][selected_plan-1]
     return selected_plan
+
 
 st.title("RecurrentGPT")
 
@@ -151,4 +154,19 @@ else:
 
     st.text_area("Written Paragraphs (editable)", value=written_paras, height=300, max_chars=2000)
     st.markdown("### Memory Module")
-    short_memory = st.text_area("Short-Term Memory (editable)", height=100, max_chars=500
+    short_memory = st.text_area("Short-Term Memory (editable)", height=100, max_chars=500)
+    long_memory = st.text_area("Long-Term Memory (editable)", height=200, max_chars=1000)
+    st.markdown("### Instruction Module")
+    instruction1 = st.text_area("Instruction 1", height=100, max_chars=500, value=instruction1, key="instruction1", disabled=True)
+    instruction2 = st.text_area("Instruction 2", height=100, max_chars=500, value=instruction2, key="instruction2", disabled=True)
+    instruction3 = st.text_area("Instruction 3", height=100, max_chars=500, value=instruction3, key="instruction3", disabled=True)
+
+    selected_plan = st.radio("Instruction Selection", ["Instruction 1", "Instruction 2", "Instruction 3"])
+    selected_instruction = st.text_area("Selected Instruction (editable)", height=150, max_chars=1000)
+
+    if st.button("Next Step"):
+        short_memory, long_memory, written_paras, instruction1, instruction2, instruction3 = controled_step(short_memory, long_memory, selected_instruction, written_paras)
+
+    selected_instruction = on_select(instruction1, instruction2, instruction3, selected_plan)
+
+    st.text_area("Selected Instruction (editable)", value=selected_instruction, height=150, max_chars=1000)
