@@ -96,11 +96,11 @@ Paragraphs:
     return start_input_to_human['output_memory'], long_memory, written_paras, init_paragraphs['Instruction 1'], init_paragraphs['Instruction 2'], init_paragraphs['Instruction 3']
 
 def step(short_memory, long_memory, instruction1, instruction2, instruction3, current_paras):
+    cache = st.session_state['cache']
     if current_paras == "":
         return "", "", "", "", "", ""
 
-    if "writer" not in st.session_state['cache']:
-        cache = st.session_state['cache']
+    if "writer" not in cache:
         start_input_to_human = cache["start_input_to_human"]
         start_input_to_human['output_instruction'] = [
             instruction1, instruction2, instruction3]
