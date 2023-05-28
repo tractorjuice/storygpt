@@ -1,10 +1,7 @@
 from utils import get_content_between_a_b, get_api_response
 import torch
-
 import random
-
 from sentence_transformers import  util
-
 
 class RecurrentGPT:
 
@@ -117,14 +114,14 @@ class RecurrentGPT:
     def step(self, response_file=None):
 
         prompt = self.prepare_input()
-
-        print(prompt+'\n'+'\n')
-
+        st.text(prompt+'\n'+'\n')
         response = get_api_response(prompt)
-
+        st.text(response)
+        
         self.output = self.parse_output(response)
         while self.output == None:
             response = get_api_response(prompt)
+            st.text(response)
             self.output = self.parse_output(response)
         if response_file:
             with open(response_file, 'a', encoding='utf-8') as f:
