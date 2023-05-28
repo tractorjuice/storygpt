@@ -71,11 +71,7 @@ def init(novel_type, description):
     # prepare first init
     
     init_text = init_prompt(novel_type, description)
-    #st.write("init_text")
-    #st.text(init_text)
     init_paragraphs = get_init(text=init_text)
-    #st.write("init_paragraphs")
-    #st.text(init_paragraphs)
 
     start_input_to_human = {
         'output_paragraph': init_paragraphs['Paragraph 3'],
@@ -213,8 +209,10 @@ else:
 
     st.text_area("Written Paragraphs (editable)", value=st.session_state.written_paras, height=300, max_chars=2000)
     st.markdown("### Memory Module")
-    st.session_state.short_memory = st.text_area("Short-Term Memory (editable)", height=100, max_chars=500, value=st.session_state.short_memory, key="short_memory")
-    st.session_state.long_memory = st.text_area("Long-Term Memory (editable)", height=200, max_chars=1000, value=st.session_state.long_memory, key="long_memory")
+    short_memory = st.session_state.short_memory
+    st.session_state.short_memory = st.text_area("Short-Term Memory (editable)", height=100, max_chars=500, value=short_memory, key="short_memory")
+    long_memory = st.session_state.long_memory
+    st.session_state.long_memory = st.text_area("Long-Term Memory (editable)", height=200, max_chars=1000, value=long_memory, key="long_memory")
     st.markdown("### Instruction Module")
     st.session_state.instruction1 = st.text_area("Instruction 1", height=100, max_chars=500, value=st.session_state.instruction1, key="selected_instruction1")
     st.session_state.instruction2 = st.text_area("Instruction 2", height=100, max_chars=500, value=st.session_state.instruction2, key="selected_instruction2")
