@@ -184,10 +184,10 @@ def on_select(instruction1, instruction2, instruction3, value):
 cache = st.session_state['cache']
 
 with st.sidebar:
-    st.title("Chat with Map")
+    st.title("Create a Novel")
     st.markdown(html_temp.format("rgba(55, 53, 47, 0.16)"),unsafe_allow_html=True)
     st.markdown("Developed by Mark Craddock](https://twitter.com/mcraddock)", unsafe_allow_html=True)
-    st.markdown("Current Version: 1.1.0")
+    st.markdown("Current Version: 0.0.1")
     st.markdown("Using GPT-4 API")
     st.markdown(html_temp.format("rgba(55, 53, 47, 0.16)"),unsafe_allow_html=True)
     st.write(f"Total Tokens Used: {st.session_state['total_tokens_used']}")
