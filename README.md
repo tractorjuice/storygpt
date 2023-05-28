@@ -1,4 +1,4 @@
-# wardley-insight-report
+# Wardley Insight Report
 
 This Streamlit application allows users to interact with a chatbot trained on GPT-4 to analyze and provide insights on a given Wardley Map. Users can ask questions and receive insights on various aspects of the map, such as component relationships, market trends, and potential improvements. Producing a final report of the insights
 
