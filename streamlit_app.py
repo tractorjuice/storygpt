@@ -9,8 +9,9 @@ st.set_page_config(page_title="Wardley Map Novel", layout="wide")
 instruction1 = ""
 instruction2 = ""
 instruction3 = ""
+written_paras = ""
 
-@st.cache(allow_output_mutation=True)
+@st.cache.data(allow_output_mutation=True)
 def load_sentence_transformer_model():
     return SentenceTransformer('multi-qa-mpnet-base-cos-v1')
 
@@ -140,11 +141,7 @@ def on_select(instruction1, instruction2, instruction3, value):
     selected_plan = [instruction1, instruction2, instruction3][selected_plan-1]
     return selected_plan
 
-st.title("RecurrentGPT")
 tabs = st.sidebar.radio("Select Mode", ("Auto-Generation", "Human-in-the-Loop"))
-
-written_paras = ""
-
 if tabs == "Auto-Generation":
     novel_type = st.text_input("Novel Type", value="Science Fiction")
     description = st.text_input("Description")
