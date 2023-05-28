@@ -11,7 +11,7 @@ instruction2 = ""
 instruction3 = ""
 written_paras = ""
 
-@st.cache_data(allow_output_mutation=True)
+@st.cache_resource
 def load_sentence_transformer_model():
     return SentenceTransformer('multi-qa-mpnet-base-cos-v1')
 
