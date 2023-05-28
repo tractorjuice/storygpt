@@ -210,7 +210,7 @@ else:
     if st.button("Init Novel Generation"):
         short_memory, long_memory, written_paras, instruction1, instruction2, instruction3 = init(novel_type, description)
 
-    st.session_state.written_paras = st.text_area("Written Paragraphs (editable)", value=written_paras, height=300, max_chars=2000, key="written_paras")
+    written_paras = st.text_area("Written Paragraphs (editable)", value=written_paras, height=300, max_chars=2000, key="written_paras")
     st.markdown("### Memory Module")
     short_memory = st.text_area("Short-Term Memory (editable)", height=100, max_chars=500, value=short_memory, key="short_memory")
     long_memory = st.text_area("Long-Term Memory (editable)", height=200, max_chars=1000, value=long_memory, key="long_memory")
