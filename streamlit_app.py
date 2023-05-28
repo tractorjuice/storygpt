@@ -4,8 +4,13 @@ from utils import get_init, parse_instructions
 from human_simulator import Human
 from recurrentgpt import RecurrentGPT
 
+@st.cache(allow_output_mutation=True)
+def load_sentence_transformer_model():
+    return SentenceTransformer('multi-qa-mpnet-base-cos-v1')
+
+# Load the model only once
 # Build the semantic search model
-embedder = SentenceTransformer('multi-qa-mpnet-base-cos-v1')
+embedder = load_sentence_transformer_model()
 
 if 'cache' not in st.session_state:
     st.session_state['cache'] = {}
