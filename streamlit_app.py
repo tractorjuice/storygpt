@@ -181,9 +181,9 @@ else:
     short_memory = st.text_area("Short-Term Memory (editable)", height=100, max_chars=500)
     long_memory = st.text_area("Long-Term Memory (editable)", height=200, max_chars=1000)
     st.markdown("### Instruction Module")
-    instruction1 = st.text_area("Instruction 1", height=100, max_chars=500, value=instruction1, key="instruction1", disabled=True)
-    instruction2 = st.text_area("Instruction 2", height=100, max_chars=500, value=instruction2, key="instruction2", disabled=True)
-    instruction3 = st.text_area("Instruction 3", height=100, max_chars=500, value=instruction3, key="instruction3", disabled=True)
+    instruction1 = st.text_area("Instruction 1", height=100, max_chars=500, value=instruction1, key="selected_instruction1", disabled=True)
+    instruction2 = st.text_area("Instruction 2", height=100, max_chars=500, value=instruction2, key="selected_instruction2", disabled=True)
+    instruction3 = st.text_area("Instruction 3", height=100, max_chars=500, value=instruction3, key="selected_instruction3", disabled=True)
 
     selected_plan = st.radio("Instruction Selection", ["Instruction 1", "Instruction 2", "Instruction 3"])
     selected_instruction = st.text_area("Selected Instruction (editable)", height=150, max_chars=1000)
