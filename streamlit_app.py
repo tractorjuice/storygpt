@@ -205,7 +205,7 @@ if tabs == "Auto-Generation":
     st.session_state.written_paras = st.text_area("Written Paragraphs (editable)", value=st.session_state.written_paras, height=300, max_chars=2000)
     st.markdown("### Memory Module")
     st.session_state.short_memory = st.text_area("Short-Term Memory (editable)", value=st.session_state.short_memory, height=100, max_chars=500, key="auto_short_memory_key")
-    st.session_state.long_memory = st.text_area("Long-Term Memory (editable)", value=st.session_state.long_memory, height=200, max_chars=1000, key="auto_short_memory_key")
+    st.session_state.long_memory = st.text_area("Long-Term Memory (editable)", value=st.session_state.long_memory, height=200, max_chars=1000, key="auto_long_memory_key")
     st.markdown("### Instruction Module")   
     st.session_state.instruction1 = st.text_area("Instruction 1 (editable)", value=st.session_state.instruction1, height=100, max_chars=500, key="auto_instruction1")
     st.session_state.instruction2 = st.text_area("Instruction 2 (editable)", value=st.session_state.instruction2, height=100, max_chars=500, key="auto_instruction2")
