@@ -115,14 +115,14 @@ class RecurrentGPT:
     def step(self, response_file=None):
 
         prompt = self.prepare_input()
-        print(prompt+'\n'+'\n')
+        #print(prompt+'\n'+'\n')
         response = get_api_response(prompt)
-        print(response)
+        #print(response)
         
         self.output = self.parse_output(response)
         while self.output == None:
             response = get_api_response(prompt)
-            print(response)
+            #print(response)
             self.output = self.parse_output(response)
         if response_file:
             with open(response_file, 'a', encoding='utf-8') as f:
