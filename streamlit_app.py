@@ -29,7 +29,24 @@ def init_prompt(novel_type, description):
         description = " about " + description
     return f"""
 Please write a {novel_type} novel{description} with 3 chapters. Follow the format below precisely:
-...
+
+Begin with the name of the novel.
+Next, write an outline for the first chapter. The outline should describe the background and the beginning of the novel.
+Write the first three paragraphs with their indication of the novel based on your outline. Write in a novelistic style and take your time to set the scene.
+Write a summary that captures the key information of the three paragraphs.
+Finally, write three different instructions for what to write next, each containing around five sentences. Each instruction should present a possible, interesting continuation of the story.
+The output format should follow these guidelines:
+Name: <name of the novel>
+Outline: <outline for the first chapter>
+Paragraph 1: <content for paragraph 1>
+Paragraph 2: <content for paragraph 2>
+Paragraph 3: <content for paragraph 3>
+Summary: <content of summary>
+Instruction 1: <content for instruction 1>
+Instruction 2: <content for instruction 2>
+Instruction 3: <content for instruction 3>
+
+Make sure to be precise and follow the output format strictly.
 """
 
 def init(novel_type, description):
