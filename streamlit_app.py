@@ -196,9 +196,9 @@ if tabs == "Auto-Generation":
     short_memory = st.text_area("Short-Term Memory (editable)", height=100, max_chars=500)
     long_memory = st.text_area("Long-Term Memory (editable)", height=200, max_chars=1000)
     st.markdown("### Instruction Module")   
-    instruction1 = st.text_area("Instruction 1 (editable)", height=100, max_chars=500, instruction1, key="instruction1", disabled=True)
-    instruction2 = st.text_area("Instruction 2 (editable)", height=100, max_chars=500, instruction2, key="instruction2", disabled=True)
-    instruction3 = st.text_area("Instruction 3 (editable)", height=100, max_chars=500, instruction3, key="instruction3", disabled=True)
+    instruction1 = st.text_area("Instruction 1 (editable)", value=instruction1, height=100, max_chars=500, key="instruction1", disabled=True)
+    instruction2 = st.text_area("Instruction 2 (editable)", value=instruction2, height=100, max_chars=500, key="instruction2", disabled=True)
+    instruction3 = st.text_area("Instruction 3 (editable)", value=instruction3, height=100, max_chars=500, key="instruction3", disabled=True)
 
     if st.button("Next Step"):
         short_memory, long_memory, written_paras, instruction1, instruction2, instruction3 = step(short_memory, long_memory, instruction1, instruction2, instruction3, written_paras)
