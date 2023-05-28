@@ -1,7 +1,7 @@
 openai
 streamlit
-streamlit-chat
-streamlit_ace
-matplotlib
-pygithub
+#streamlit-chat
+#streamlit_ace
+#matplotlib
+#pygithub
 sentence-transformers
