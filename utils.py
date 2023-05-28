@@ -6,6 +6,8 @@ def get_api_response(content: str, max_tokens=None):
     OPENAI_API_KEY = st.secrets["OPENAI_API_KEY"]
     openai = ChatCompletion(api_key=OPENAI_API_KEY)
     
+    st.code(content)
+    
     response = openai.create(
         model='gpt-3.5-turbo',
         messages=[
