@@ -4,7 +4,13 @@ from utils import get_init, parse_instructions
 from human_simulator import Human
 from recurrentgpt import RecurrentGPT
 
-st.set_page_config(page_title="Wardley Map Novel", layout="wide") 
+html_temp = """
+                <div style="background-color:{};padding:1px">
+                
+                </div>
+            """
+
+st.set_page_config(page_title="Wardley Map Novel", layout="wide")
 
 @st.cache_resource
 def load_sentence_transformer_model():
@@ -33,8 +39,10 @@ if 'short_memory' not in st.session_state:
     st.session_state['short_memory'] = ""
     
 if 'long_memory' not in st.session_state:
-    st.session_state['long_memory'] = ""  
+    st.session_state['long_memory'] = ""
     
+if 'total_tokens_used' not in st.session_state:
+    st.session_state['total_tokens_used'] = 0
 
 def init_prompt(novel_type, description):
     if description == "":
@@ -175,7 +183,19 @@ def on_select(instruction1, instruction2, instruction3, value):
 
 cache = st.session_state['cache']
 
-tabs = st.sidebar.radio("Select Mode", ("Human-in-the-Loop", "Auto-Generation", ))
+with st.sidebar:
+    st.title("Chat with Map")
+    st.markdown(html_temp.format("rgba(55, 53, 47, 0.16)"),unsafe_allow_html=True)
+    st.markdown("Developed by Mark Craddock](https://twitter.com/mcraddock)", unsafe_allow_html=True)
+    st.markdown("Current Version: 1.1.0")
+    st.markdown("Using GPT-4 API")
+    st.markdown(html_temp.format("rgba(55, 53, 47, 0.16)"),unsafe_allow_html=True)
+    st.write(f"Total Tokens Used: {st.session_state['total_tokens_used']}")
+    st.write(f"Total Cost: ${round(st.session_state['total_tokens_used'] * 0.06 / 1000, 2)}")
+    st.markdown(html_temp.format("rgba(55, 53, 47, 0.16)"),unsafe_allow_html=True)
+    st.markdown("## Select Wardley Map") 
+    tabs = stradio("Select Mode", ("Human-in-the-Loop", "Auto-Generation", ))
+    
 if tabs == "Auto-Generation":
     novel_type = st.text_input("Novel Type", value="Science Fiction")
     description = st.text_input("Description")
@@ -211,9 +231,9 @@ else:
     st.session_state.long_memory = st.text_area("Long-Term Memory (editable)", height=200, max_chars=1000, value=st.session_state.long_memory, key="long_memory_key")
     
     st.markdown("### Instruction Module")
-    st.session_state.instruction1 = st.text_area("Instruction 1", height=100, max_chars=500, value=st.session_state.instruction1, key="selected_instruction1")
-    st.session_state.instruction2 = st.text_area("Instruction 2", height=100, max_chars=500, value=st.session_state.instruction2, key="selected_instruction2")
-    st.session_state.instruction3 = st.text_area("Instruction 3", height=100, max_chars=500, value=st.session_state.instruction3, key="selected_instruction3")
+    st.session_state.instruction1 = st.text_area("Instruction 1", height=100, max_chars=500, value=st.session_state.instruction1, key="selected_instruction1", disabled=True)
+    st.session_state.instruction2 = st.text_area("Instruction 2", height=100, max_chars=500, value=st.session_state.instruction2, key="selected_instruction2", disabled=True)
+    st.session_state.instruction3 = st.text_area("Instruction 3", height=100, max_chars=500, value=st.session_state.instruction3, key="selected_instruction3", disabled=True)
 
     selected_plan = st.radio("Instruction Selection", ["Instruction 1", "Instruction 2", "Instruction 3"])
     selected_instruction = on_select(st.session_state.instruction1, st.session_state.instruction2, st.session_state.instruction3, selected_plan)
