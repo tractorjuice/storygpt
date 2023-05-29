@@ -4,6 +4,23 @@ from utils import get_init, parse_instructions
 from human_simulator import Human
 from recurrentgpt import RecurrentGPT
 
+from wardley_map import wardley
+from github import Github
+from streamlit_ace import st_ace
+import requests
+import time
+from time import sleep
+import base64
+# Importing the functions from the external file
+from wardley_chatbot import get_initial_message, get_chatgpt_response, update_chat, get_messages, get_owm_map
+API_ENDPOINT = "https://api.onlinewardleymaps.com/v1/maps/fetch?id="
+OPENAI_API_KEY = st.secrets["OPENAI_API_KEY"]
+GITHUB = st.secrets["GITHUB"]
+QUERY = "Suggest 3 questions you can answer about this Wardley Map, include any issues with this map?"
+GITHUBREPO = "swardley/Research2022"
+MODEL = "gpt-4"
+map_id = None
+
 html_temp = """
                 <div style="background-color:{};padding:1px">
                 
@@ -12,6 +29,16 @@ html_temp = """
 
 st.set_page_config(page_title="Wardley Map Novel", layout="wide")
 
+# Dictionary of map IDs with user-friendly names
+map_dict = {
+    "Tea Shop": "QRXryFJ8Q1NxhbHKQL",   
+    "Agriculture 2023 Research": "gQuu7Kby3yYveDngy2", 
+    "AI & Entertainment": "1LSW3jTlx4u16T06di", 
+    "Prompt Engineering": "mUJtoSmOfqlfXhNMJP",
+    "Microsoft Fabric": "K4DjW1RdsbUWV8JzoP",
+    "Fixed Penalty Notices": "gTTfD4r2mORudVFKge"
+}
+
 @st.cache_resource
 def load_sentence_transformer_model():
     return SentenceTransformer('multi-qa-mpnet-base-cos-v1')
@@ -19,6 +46,32 @@ def load_sentence_transformer_model():
 # Load the model only once
 # Build the semantic search model
 embedder = load_sentence_transformer_model()
+
+def reset_map():
+    st.session_state['messages'] = 0
+    st.session_state['total_tokens_used'] = 0
+    st.session_state['tokens_used'] = 0
+    st.session_state['past'] = []
+    st.session_state['generated'] = []
+    st.session_state['disabled_buttons'] = []
+
+if 'generated' not in st.session_state:
+    st.session_state['generated'] = []
+    
+if 'past' not in st.session_state:
+    st.session_state['past'] = []
+
+if 'messages' not in st.session_state:
+    st.session_state['messages'] = []
+    
+if 'map_text' not in st.session_state:
+    st.session_state['map_text'] = []
+    
+if 'current_map_id' not in st.session_state:
+    st.session_state['current_map_id'] = []
+
+if 'disabled_buttons' not in st.session_state:
+    st.session_state['disabled_buttons'] = []
 
 if 'cache' not in st.session_state:
     st.session_state['cache'] = {}
@@ -180,6 +233,26 @@ def on_select(instruction1, instruction2, instruction3, value):
     selected_plan = int(value.replace("Instruction ", ""))
     selected_plan = [instruction1, instruction2, instruction3][selected_plan-1]
     return selected_plan
+  
+try:
+    g = Github(GITHUB)
+    repo = g.get_repo(GITHUBREPO)
+except GithubException as e:
+    st.error(f"An error occurred contacting GitHub: {e}")
+    repo = None
+    
+# Get a list of files available in the GitHub repository    
+if 'file_list' not in st.session_state:
+    st.session_state.file_list = []
+    contents = repo.get_contents("")
+    while contents:
+        file_item = contents.pop(0)
+        if file_item.type == "dir":
+            contents.extend(repo.get_contents(file_item.path))
+        else:
+            file_name = file_item.name
+            if not file_name.isupper() and not file_name.startswith('.') and file_name.lower() != 'readme.md':
+                st.session_state.file_list.append(file_item.path)
 
 cache = st.session_state['cache']
 
