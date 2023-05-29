@@ -1,15 +1,10 @@
-# Wardley Insight Report
+# StoryGPT
 
-This Streamlit application allows users to interact with a chatbot trained on GPT-4 to analyze and provide insights on a given Wardley Map. Users can ask questions and receive insights on various aspects of the map, such as component relationships, market trends, and potential improvements. Producing a final report of the insights
+This Streamlit application allows users to interact with a chatbot trained on GPT-4 to create a story.
 
 ## Features
 
-- Retrieve a Wardley Map based on its ID.
-- Fetch a Wardley Map based on a predefined list of IDs.
-- Get a Wardley Map from a GitHub repository
-- Interact with a GPT-4 based chatbot to ask questions and receive insights about the Wardley Map.
-- Display generated responses from the chatbot.
-- Download chat transcripts and generated documents as separate files.
+- 
 
 ## Requirements
 
@@ -38,7 +33,7 @@ Add your OpenAI API Key to the Streamlit secrets within the administration inter
 
 `.streamlit run app.py`
 
-[![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://wardleyinsightreport.streamlit.app/)
+[![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://storygpt.streamlit.app/)
 
 ## Usage
 Enter the ID of a Wardley Map you would like to analyze.
