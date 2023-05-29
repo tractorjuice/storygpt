@@ -12,13 +12,6 @@ import base64
 # Importing the functions from the external file
 from wardley_chatbot import get_initial_message, get_chatgpt_response, update_chat, get_messages, get_owm_map
 
-# Import RecurrentGPT
-from recurrentgpt import RecurrentGPT
-from human_simulator import Human
-from sentence_transformers import SentenceTransformer
-from utils import get_init, parse_instructions
-import re
-
 API_ENDPOINT = "https://api.onlinewardleymaps.com/v1/maps/fetch?id="
 OPENAI_API_KEY = st.secrets["OPENAI_API_KEY"]
 GITHUB = st.secrets["GITHUB"]
@@ -50,9 +43,6 @@ def reset_map():
     st.session_state['past'] = []
     st.session_state['generated'] = []
     st.session_state['disabled_buttons'] = []
-
-# Build the semantic search model
-embedder = SentenceTransformer('multi-qa-mpnet-base-cos-v1')
 
 try:
     g = Github(GITHUB)
