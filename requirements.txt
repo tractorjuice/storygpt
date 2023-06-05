@@ -5,3 +5,4 @@ streamlit
 #matplotlib
 #pygithub
 sentence-transformers
+langchain
