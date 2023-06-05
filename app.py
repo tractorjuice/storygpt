@@ -27,12 +27,6 @@ GITHUBREPO = "swardley/Research2022"
 MODEL = "gpt-4"
 map_id = None
 
-html_temp = """
-                <div style="background-color:{};padding:1px">
-                
-                </div>
-                """
-
 # Dictionary of map IDs with user-friendly names
 map_dict = {
     "Tea Shop": "QRXryFJ8Q1NxhbHKQL",   
@@ -102,14 +96,14 @@ st.set_page_config(page_title="Chat with your Wardley Map", layout="wide")
 
 with st.sidebar:
     st.title("Chat with Map")
-    st.markdown(html_temp.format("rgba(55, 53, 47, 0.16)"),unsafe_allow_html=True)
+    st.divider()
     st.markdown("Developed by Mark Craddock](https://twitter.com/mcraddock)", unsafe_allow_html=True)
     st.markdown("Current Version: 1.1.0")
     st.markdown("Using GPT-4 API")
-    st.markdown(html_temp.format("rgba(55, 53, 47, 0.16)"),unsafe_allow_html=True)
+    st.divider()
     st.write(f"Total Tokens Used: {st.session_state['total_tokens_used']}")
     st.write(f"Total Cost: ${round(st.session_state['total_tokens_used'] * 0.06 / 1000, 2)}")
-    st.markdown(html_temp.format("rgba(55, 53, 47, 0.16)"),unsafe_allow_html=True)
+    st.divider()
     st.markdown("## Select Wardley Map") 
 
 map_selection = st.sidebar.radio("Map Selection", ("Select from GitHub", "Select from List", "Enter Map ID"), help="Select GitHub to get a list of Simon Wardley's latest research.\n\nSelect from list to get predefined maps.\n\nSelect Enter Map ID to provide your own Onlinewardleymaps id", key="map_selection")
@@ -176,7 +170,6 @@ if 'map_text' in st.session_state:
         
 if not content == st.session_state['map_text']:
     st.session_state['map_text'] = content
-    #map_text = st.session_state['map_text']
     st.session_state['messages'] = get_messages(st.session_state['map_text'])
     st.experimental_rerun()
 
@@ -185,7 +178,7 @@ with col1:
     st.markdown("## Chat")
     query = st.text_input("Question: ", value=QUERY, key="input")
     query_button = st.button("Ask Question", key="querybutton", help="Submit your question")
-    st.markdown(html_temp.format("rgba(55, 53, 47, 0.16)"),unsafe_allow_html=True)
+    st.divider()
     if query_button and query:
         with st.spinner("Thinking... this can take a while..."):
             messages = st.session_state['messages']
@@ -203,7 +196,7 @@ with col1:
 
 with col2:
     st.markdown("## Structured Prompts")
-    st.markdown(html_temp.format("rgba(55, 53, 47, 0.16)"), unsafe_allow_html=True)
+    st.divider()
     if st.session_state["generated"]:
         for text in st.session_state["generated"]:
             sentences = text.strip().split("\n")
@@ -240,11 +233,11 @@ with col2:
 
 with col3:
     st.markdown("## Long-Term Memory")
-    st.markdown(html_temp.format("rgba(55, 53, 47, 0.16)"),unsafe_allow_html=True)
+    st.divider()
     if st.session_state['generated']:
         download_doc_str = []
         for i in range(len(st.session_state['generated'])):
-            st.markdown(html_temp.format("rgba(55, 53, 47, 0.16)"),unsafe_allow_html=True)
+            st.divider()
             st.write(st.session_state['generated'][i])
 
         for i in range(len(st.session_state['generated']) - 1, -1, -1):    
@@ -253,7 +246,6 @@ with col3:
         if download_doc_str:
             download_doc_str = '\n'.join(download_doc_str)
             st.download_button('Download', download_doc_str)
-    st.markdown('</div>', unsafe_allow_html=True)  # Add this line to close the scrollable container
             
 with col1:
     if st.session_state['generated']:
