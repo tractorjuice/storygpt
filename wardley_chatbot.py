@@ -1,6 +1,9 @@
 import streamlit as st
+from langchain.chat_models import ChatOpenAI
+from langchain.schema import AIMessage, HumanMessage, SystemMessage
+from langchain.callbacks import get_openai_callback
 import requests
-import openai
+import re
 
 def get_initial_message(map_id):
     url = f"https://api.onlinewardleymaps.com/v1/maps/fetch?id={map_id}"
@@ -159,12 +162,36 @@ def get_messages(map_text):
     return messages
 
 def get_chatgpt_response(messages, model):
-    response = openai.ChatCompletion.create(
-        model=model,
-        messages=messages
+    OPENAI_API_KEY = st.secrets["OPENAI_API_KEY"]
+    
+    # Convert messages to corresponding SystemMessage, HumanMessage, and AIMessage objects
+    new_messages = []
+    for message in messages:
+        role = message['role']
+        content = message['content']
+        
+        if role == 'system':
+            new_messages.append(SystemMessage(content=content))
+        elif role == 'user':
+            new_messages.append(HumanMessage(content=content))
+        elif role == 'assistant':
+            new_messages.append(AIMessage(content=content))
+    
+    chat = ChatOpenAI(
+        openai_api_key=OPENAI_API_KEY,
+        model_name=model,
+        temperature=0.5,
     )
-    content = response['choices'][0]['message']['content']
-    return content, response  # Return the response along with the content
+    try:
+        with get_openai_callback() as cb:
+            response = chat(new_messages)
+    except:
+        st.error("OpenAI Error")
+    if response is not None:
+        return response.content, cb
+    else:
+        st.error("Error")
+        return "Error: response not found"
   
 def update_chat(messages, role, content):
     messages.append({"role": role, "content": content})
