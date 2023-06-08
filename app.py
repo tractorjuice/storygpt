@@ -10,7 +10,7 @@ import time
 from time import sleep
 import base64
 # Importing the functions from the external file
-from wardley_chatbot import get_initial_message, get_chatgpt_response, update_chat, get_messages, get_owm_map
+from wardley_chatbot import get_chatgpt_response, update_chat, get_messages, get_owm_map
 
 # Import RecurrentGPT
 from recurrentgpt import RecurrentGPT
@@ -38,7 +38,7 @@ map_dict = {
 }
 
 def reset_map():
-    st.session_state['messages'] = 0
+    st.session_state['messages'] = []
     st.session_state['total_tokens_used'] = 0
     st.session_state['tokens_used'] = 0
     st.session_state['past'] = []
@@ -185,7 +185,7 @@ with col1:
             messages = update_chat(messages, "user", query)
             try:
                 content, response = get_chatgpt_response(messages, MODEL)
-                st.session_state.tokens_used = response['usage']['total_tokens']
+                st.session_state.tokens_used = response.total_tokens
                 st.session_state.total_tokens_used = st.session_state.total_tokens_used + st.session_state.tokens_used
                 messages = update_chat(messages, "assistant", content)
                 st.session_state.generated.append(content)
@@ -214,7 +214,7 @@ with col2:
                             try:
                                 # code that makes a request to the OpenAI API
                                 content, response = get_chatgpt_response(messages, MODEL)
-                                st.session_state.tokens_used = response['usage']['total_tokens']
+                                st.session_state.tokens_used = response.total_tokens
                                 st.session_state.total_tokens_used = st.session_state.total_tokens_used + st.session_state.tokens_used
                                 messages = update_chat(messages, "assistant", content)
                                 st.session_state.past.append(stripped_sentence)
