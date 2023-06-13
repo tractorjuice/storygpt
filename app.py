@@ -24,7 +24,14 @@ OPENAI_API_KEY = st.secrets["OPENAI_API_KEY"]
 GITHUB = st.secrets["GITHUB"]
 QUERY = "Suggest 3 questions you can answer about this Wardley Map, include any issues with this map?"
 GITHUBREPO = "swardley/Research2022"
+#MODEL = "gpt-3"
+#MODEL = "gpt-3.5-turbo"
+#MODEL = "gpt-3.5-turbo-0613"
+#MODEL = "gpt-3.5-turbo-16k"
+#MODEL = "gpt-3.5-turbo-16k-0613"
 MODEL = "gpt-4"
+#MODEL = "gpt-4-0613"
+#MODEL = "gpt-4-32k-0613"
 map_id = None
 
 # Dictionary of map IDs with user-friendly names
