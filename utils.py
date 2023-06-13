@@ -12,8 +12,14 @@ def get_api_response(content: str, max_tokens=None):
     OPENAI_API_KEY = st.secrets["OPENAI_API_KEY"]
     chat = ChatOpenAI(
         openai_api_key=OPENAI_API_KEY,
-        model='gpt-3.5-turbo',
+        #model='gpt-3',
+        #model='gpt-3.5-turbo',
+        #model='gpt-3.5-turbo-0613',
+        model='gpt-3.5-turbo-16k',
+        #model='gpt-3.5-turbo-16k-0613',
         #model='gpt-4',
+        #model='gpt-4-0613',
+        #model='gpt-4-32k-0613',
         temperature=0.5,
         max_tokens=max_tokens
     )
