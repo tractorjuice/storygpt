@@ -1,8 +1,4 @@
 openai
 streamlit
-#streamlit-chat
-#streamlit_ace
-#matplotlib
-#pygithub
 sentence-transformers
 langchain
