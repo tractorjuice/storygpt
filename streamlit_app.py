@@ -4,13 +4,7 @@ from utils import get_init, parse_instructions
 from human_simulator import Human
 from recurrentgpt import RecurrentGPT
 
-html_temp = """
-                <div style="background-color:{};padding:1px">
-                
-                </div>
-            """
-
-st.set_page_config(page_title="Wardley Map Novel", layout="wide")
+st.set_page_config(page_title="Story Generator", layout="wide")
 
 @st.cache_resource
 def load_sentence_transformer_model():
@@ -185,14 +179,14 @@ cache = st.session_state['cache']
 
 with st.sidebar:
     st.title("Create a Novel")
-    st.markdown(html_temp.format("rgba(55, 53, 47, 0.16)"),unsafe_allow_html=True)
+    st.divider()
     st.markdown("Developed by Mark Craddock](https://twitter.com/mcraddock)", unsafe_allow_html=True)
     st.markdown("Current Version: 0.0.6")
     st.markdown("Using GPT3-16K API")
-    st.markdown(html_temp.format("rgba(55, 53, 47, 0.16)"),unsafe_allow_html=True)
+    st.divider()
     st.write(f"Total Tokens Used: {st.session_state['total_tokens_used']}")
     st.write(f"Total Cost: ${round(st.session_state['total_tokens_used'] * 0.06 / 1000, 2)}")
-    st.markdown(html_temp.format("rgba(55, 53, 47, 0.16)"),unsafe_allow_html=True)
+    st.divider()
     tabs = st.radio("Select Mode", ("Human-in-the-Loop", "Auto-Generation", ))
     
 if tabs == "Auto-Generation":
