@@ -4,7 +4,7 @@ This Streamlit application allows users to interact with a chatbot trained on GP
 
 ## Features
 
-- 
+- Enables manual creation of stories using ChatGPT and LangChain
 
 ## Requirements
 
@@ -36,17 +36,12 @@ Add your OpenAI API Key to the Streamlit secrets within the administration inter
 [![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://storygpt.streamlit.app/)
 
 ## Usage
-Enter the ID of a Wardley Map you would like to analyze.
-
-The map's content will be displayed in the sidebar.
-
-Type your question in the "Question" input box.
-
-The chatbot will provide its response in the chat window.
-
-Generated responses are displayed in reverse order in a separate column, along with buttons for additional actions.
-
-Download the chat transcript or the generated document using the download buttons provided.
+Enter the description of the story
+Initialise the story
+Select the preferred paragraph to generate a section for your story.
 
 ## Contributing
 Feel free to submit issues and pull requests to improve the application. For major changes, please open an issue first to discuss what you would like to change.
+
+## Source
+Inspired by RecurrentGPT https://github.com/aiwaves-cn/RecurrentGPT
