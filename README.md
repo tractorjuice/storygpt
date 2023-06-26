@@ -40,6 +40,10 @@ Enter the description of the story
 Initialise the story
 Select the preferred paragraph to generate a section for your story.
 
+## Author
+
+[![Twitter Follow](https://img.shields.io/twitter/follow/mcraddock?style=social)](https://twitter.com/mcraddock)
+
 ## Contributing
 Feel free to submit issues and pull requests to improve the application. For major changes, please open an issue first to discuss what you would like to change.
 
