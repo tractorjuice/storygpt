@@ -2,3 +2,4 @@ openai
 streamlit
 sentence-transformers
 langchain
+promptlayer
