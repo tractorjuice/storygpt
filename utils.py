@@ -1,16 +1,13 @@
-import re
+import re, os
 import streamlit as st
 from langchain.chat_models import ChatOpenAI
-from langchain.schema import (
-    AIMessage,
-    HumanMessage,
-    SystemMessage
-)
-#from openai import ChatCompletion
+from langchain.schema import AIMessage, HumanMessage, SystemMessage
+from langchain.chat_models import PromptLayerChatOpenAI
 
 def get_api_response(content: str, max_tokens=None):
     OPENAI_API_KEY = st.secrets["OPENAI_API_KEY"]
-    chat = ChatOpenAI(
+    os.environ["PROMPTLAYER_API_KEY"] = st.secrets["PROMPTLAYER"]
+    chat = PromptLayerChatOpenAI(
         openai_api_key=OPENAI_API_KEY,
         #model='gpt-3',
         #model='gpt-3.5-turbo',
@@ -21,7 +18,8 @@ def get_api_response(content: str, max_tokens=None):
         #model='gpt-4-0613',
         #model='gpt-4-32k-0613',
         temperature=0.5,
-        max_tokens=max_tokens
+        max_tokens=max_tokens,
+        pl_tags=["storygpt"],
     )
     response = None
     
