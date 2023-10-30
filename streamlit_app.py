@@ -3,6 +3,7 @@ from sentence_transformers import SentenceTransformer
 from utils import get_init, parse_instructions
 from human_simulator import Human
 from recurrentgpt import RecurrentGPT
+import openai
 import promptlayer
 import uuid
 
@@ -197,6 +198,15 @@ with st.sidebar:
     st.write(f"Total Cost: ${round(st.session_state['total_tokens_used'] * 0.06 / 1000, 2)}")
     st.divider()
     tabs = st.radio("Select Mode", ("Human-in-the-Loop", "Auto-Generation", ))
+
+if user_openai_api_key:
+    # If the user has provided an API key, use it
+    # Swap out openai for promptlayer
+    promptlayer.api_key = st.secrets["PROMPTLAYER"]
+    openai = promptlayer.openai
+    openai.api_key = user_openai_api_key
+else:
+    st.warning("Please enter your OpenAI API key", icon="⚠️")
     
 if tabs == "Auto-Generation":
     novel_type = st.text_input("Novel Type", value="Science Fiction")
