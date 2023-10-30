@@ -17,6 +17,9 @@ def load_sentence_transformer_model():
 # Build the semantic search model
 embedder = load_sentence_transformer_model()
 
+if "user_openai_api_key" not in st.session_state:
+    st.session_state.user_openai_api_key = None
+
 if "session_id" not in st.session_state:
     st.session_state.session_id = str(uuid.uuid4())
 
@@ -192,19 +195,19 @@ with st.sidebar:
     # Check if the user has provided an API key, otherwise default to the secret
     st.sidebar.markdown(st.session_state.session_id)
     st.sidebar.divider()
-    user_openai_api_key = st.sidebar.text_input("Enter your OpenAI API Key:", placeholder="sk-...", type="password")
+    st.session_state.user_openai_api_key = st.sidebar.text_input("Enter your OpenAI API Key:", placeholder="sk-...", type="password")
     st.divider()
     st.write(f"Total Tokens Used: {st.session_state['total_tokens_used']}")
     st.write(f"Total Cost: ${round(st.session_state['total_tokens_used'] * 0.06 / 1000, 2)}")
     st.divider()
     tabs = st.radio("Select Mode", ("Human-in-the-Loop", "Auto-Generation", ))
 
-if user_openai_api_key:
+if st.session_state.user_openai_api_key:
     # If the user has provided an API key, use it
     # Swap out openai for promptlayer
     promptlayer.api_key = st.secrets["PROMPTLAYER"]
     openai = promptlayer.openai
-    openai.api_key = user_openai_api_key
+    openai.api_key = st.session_state.user_openai_api_key
 else:
     st.warning("Please enter your OpenAI API key", icon="⚠️")
     
@@ -212,7 +215,7 @@ if tabs == "Auto-Generation":
     novel_type = st.text_input("Novel Type", value="Science Fiction")
     description = st.text_input("Description")
 
-    if user_openai_api_key:
+    if st.session_state.user_openai_api_key:
         if st.button("Initialise Novel Generation"):
             with st.spinner("Thinking"):
                 st.session_state.short_memory, st.session_state.long_memory, st.session_state.written_paras, st.session_state.instruction1, st.session_state.instruction2, st.session_state.instruction3 = init(novel_type, description)
@@ -226,7 +229,7 @@ if tabs == "Auto-Generation":
     st.session_state.instruction2 = st.text_area("Instruction 2 (editable)", value=st.session_state.instruction2, height=100, max_chars=500, key="auto_instruction2")
     st.session_state.instruction3 = st.text_area("Instruction 3 (editable)", value=st.session_state.instruction3, height=100, max_chars=500, key="auto_instruction3")
 
-    if user_openai_api_key:
+    if st.session_state.user_openai_api_key:
         if st.button("Next Step"):
             with st.spinner("Thinking"):
                 st.session_state.short_memory, st.session_state.long_memory, st.session_state.written_paras, st.session_state.instruction1, st.session_state.instruction2, st.session_state.instruction3 = step(st.session_state.short_memory, st.session_state.long_memory, st.session_state.instruction1, st.session_state.instruction2, st.session_state.instruction3, st.session_state.written_paras)
@@ -236,7 +239,7 @@ else:
     novel_type = st.text_input("Novel Type", value="Science Fiction")
     description = st.text_input("Description")
 
-    if user_openai_api_key:
+    if st.session_state.user_openai_api_key:
         if st.button("Initialise Novel Generation"):
             with st.spinner("Thinking"):
                 st.session_state.short_memory, st.session_state.long_memory, st.session_state.written_paras, st.session_state.instruction1, st.session_state.instruction2, st.session_state.instruction3 = init(novel_type, description)
@@ -255,7 +258,7 @@ else:
     selected_instruction = on_select(st.session_state.instruction1, st.session_state.instruction2, st.session_state.instruction3, selected_plan)
     st.text_area("Selected Instruction (editable)", height=150, max_chars=1000, value=selected_instruction, key="selected_instruction")
 
-    if user_openai_api_key:
+    if st.session_state.user_openai_api_key:
         if st.button("Next Step"):
             with st.spinner("Thinking"):
                 st.session_state.short_memory, st.session_state.long_memory, st.session_state.written_paras, st.session_state.instruction1, st.session_state.instruction2, st.session_state.instruction3 = controled_step(st.session_state.short_memory, st.session_state.long_memory, selected_instruction, st.session_state.written_paras)
