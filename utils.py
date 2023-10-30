@@ -17,7 +17,7 @@ def get_api_response(content: str, max_tokens=None):
         #model='gpt-4-32k-0613',
         temperature=0.5,
         max_tokens=max_tokens,
-        pl_tags=["storygpt"],
+        pl_tags=["story-gpt", st.session_state.session_id],
     )
     response = None
     
