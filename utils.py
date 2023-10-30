@@ -4,15 +4,6 @@ from langchain.chat_models import ChatOpenAI
 from langchain.schema import AIMessage, HumanMessage, SystemMessage
 from langchain.chat_models import PromptLayerChatOpenAI
 
-if user_openai_api_key:
-    # If the user has provided an API key, use it
-    # Swap out openai for promptlayer
-    promptlayer.api_key = st.secrets["PROMPTLAYER"]
-    openai = promptlayer.openai
-    openai.api_key = user_openai_api_key
-else:
-    st.warning("Please enter your OpenAI API key", icon="⚠️")
-
 def get_api_response(content: str, max_tokens=None):
     chat = PromptLayerChatOpenAI(
         openai_api_key=OPENAI_API_KEY,
