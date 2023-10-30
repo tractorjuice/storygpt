@@ -202,9 +202,10 @@ if tabs == "Auto-Generation":
     novel_type = st.text_input("Novel Type", value="Science Fiction")
     description = st.text_input("Description")
 
-    if st.button("Initialise Novel Generation"):
-        with st.spinner("Thinking"):
-            st.session_state.short_memory, st.session_state.long_memory, st.session_state.written_paras, st.session_state.instruction1, st.session_state.instruction2, st.session_state.instruction3 = init(novel_type, description)
+    if user_openai_api_key:
+        if st.button("Initialise Novel Generation"):
+            with st.spinner("Thinking"):
+                st.session_state.short_memory, st.session_state.long_memory, st.session_state.written_paras, st.session_state.instruction1, st.session_state.instruction2, st.session_state.instruction3 = init(novel_type, description)
 
     st.session_state.written_paras = st.text_area("Written Paragraphs (editable)", value=st.session_state.written_paras, height=300, max_chars=2000)
     st.markdown("### Memory Module")
@@ -215,18 +216,20 @@ if tabs == "Auto-Generation":
     st.session_state.instruction2 = st.text_area("Instruction 2 (editable)", value=st.session_state.instruction2, height=100, max_chars=500, key="auto_instruction2")
     st.session_state.instruction3 = st.text_area("Instruction 3 (editable)", value=st.session_state.instruction3, height=100, max_chars=500, key="auto_instruction3")
 
-    if st.button("Next Step"):
-        with st.spinner("Thinking"):
-            st.session_state.short_memory, st.session_state.long_memory, st.session_state.written_paras, st.session_state.instruction1, st.session_state.instruction2, st.session_state.instruction3 = step(st.session_state.short_memory, st.session_state.long_memory, st.session_state.instruction1, st.session_state.instruction2, st.session_state.instruction3, st.session_state.written_paras)
-            st.rerun()
-            
+    if user_openai_api_key:
+        if st.button("Next Step"):
+            with st.spinner("Thinking"):
+                st.session_state.short_memory, st.session_state.long_memory, st.session_state.written_paras, st.session_state.instruction1, st.session_state.instruction2, st.session_state.instruction3 = step(st.session_state.short_memory, st.session_state.long_memory, st.session_state.instruction1, st.session_state.instruction2, st.session_state.instruction3, st.session_state.written_paras)
+                st.rerun()
+                
 else:
     novel_type = st.text_input("Novel Type", value="Science Fiction")
     description = st.text_input("Description")
 
-    if st.button("Initialise Novel Generation"):
-        with st.spinner("Thinking"):
-            st.session_state.short_memory, st.session_state.long_memory, st.session_state.written_paras, st.session_state.instruction1, st.session_state.instruction2, st.session_state.instruction3 = init(novel_type, description)
+    if user_openai_api_key:
+        if st.button("Initialise Novel Generation"):
+            with st.spinner("Thinking"):
+                st.session_state.short_memory, st.session_state.long_memory, st.session_state.written_paras, st.session_state.instruction1, st.session_state.instruction2, st.session_state.instruction3 = init(novel_type, description)
 
     st.session_state.written_paras = st.text_area("Written Paragraphs (editable)", value=st.session_state.written_paras, height=300, max_chars=2000, key="written_paras_key")
     st.markdown("### Memory Module")
@@ -242,7 +245,8 @@ else:
     selected_instruction = on_select(st.session_state.instruction1, st.session_state.instruction2, st.session_state.instruction3, selected_plan)
     st.text_area("Selected Instruction (editable)", height=150, max_chars=1000, value=selected_instruction, key="selected_instruction")
 
-    if st.button("Next Step"):
-        with st.spinner("Thinking"):
-            st.session_state.short_memory, st.session_state.long_memory, st.session_state.written_paras, st.session_state.instruction1, st.session_state.instruction2, st.session_state.instruction3 = controled_step(st.session_state.short_memory, st.session_state.long_memory, selected_instruction, st.session_state.written_paras)
-            st.rerun()
+    if user_openai_api_key:
+            if st.button("Next Step"):
+            with st.spinner("Thinking"):
+                st.session_state.short_memory, st.session_state.long_memory, st.session_state.written_paras, st.session_state.instruction1, st.session_state.instruction2, st.session_state.instruction3 = controled_step(st.session_state.short_memory, st.session_state.long_memory, selected_instruction, st.session_state.written_paras)
+                st.rerun()
