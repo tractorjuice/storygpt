@@ -3,6 +3,8 @@ from sentence_transformers import SentenceTransformer
 from utils import get_init, parse_instructions
 from human_simulator import Human
 from recurrentgpt import RecurrentGPT
+import promptlayer
+import uuid
 
 st.set_page_config(page_title="Story Generator", layout="wide")
 
@@ -13,6 +15,9 @@ def load_sentence_transformer_model():
 # Load the model only once
 # Build the semantic search model
 embedder = load_sentence_transformer_model()
+
+if "session_id" not in st.session_state:
+    st.session_state.session_id = str(uuid.uuid4())
 
 if 'cache' not in st.session_state:
     st.session_state['cache'] = {}
@@ -181,8 +186,10 @@ with st.sidebar:
     st.title("Create a Novel")
     st.divider()
     st.markdown("Developed by Mark Craddock](https://twitter.com/mcraddock)", unsafe_allow_html=True)
-    st.markdown("Current Version: 0.0.6")
+    st.markdown("Current Version: 1.0.0")
     st.markdown("Using GPT3-16K API")
+    # Check if the user has provided an API key, otherwise default to the secret
+    user_openai_api_key = st.sidebar.text_input("Enter your OpenAI API Key:", placeholder="sk-...", type="password")
     st.divider()
     st.write(f"Total Tokens Used: {st.session_state['total_tokens_used']}")
     st.write(f"Total Cost: ${round(st.session_state['total_tokens_used'] * 0.06 / 1000, 2)}")
