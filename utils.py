@@ -6,7 +6,7 @@ from langchain.chat_models import PromptLayerChatOpenAI
 
 def get_api_response(content: str, max_tokens=None):
     chat = PromptLayerChatOpenAI(
-        openai_api_key=OPENAI_API_KEY,
+        openai_api_key=st.session_state.user_openai_api_key,
         #model='gpt-3',
         #model='gpt-3.5-turbo',
         #model='gpt-3.5-turbo-0613',
