@@ -16,7 +16,7 @@ MODEL = "gpt-3.5-turbo-1106" # 16K, Sept 2021. New Updated GPT 3.5 Turbo. The la
 def get_api_response(content: str, max_tokens=None):
     chat = PromptLayerChatOpenAI(
         openai_api_key=st.session_state.user_openai_api_key,
-        MODEL,
+        model=MODEL,
         temperature=0.5,
         max_tokens=max_tokens,
         pl_tags=["story-gpt", st.session_state.session_id],
