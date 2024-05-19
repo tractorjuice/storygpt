@@ -4,7 +4,7 @@ from utils import get_init, parse_instructions
 from human_simulator import Human
 from recurrentgpt import RecurrentGPT
 import openai
-import uuid
+import uuid, os
 
 st.set_page_config(page_title="Story Generator", layout="wide")
 
