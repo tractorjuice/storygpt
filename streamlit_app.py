@@ -4,7 +4,6 @@ from utils import get_init, parse_instructions
 from human_simulator import Human
 from recurrentgpt import RecurrentGPT
 import openai
-import promptlayer
 import uuid
 
 st.set_page_config(page_title="Story Generator", layout="wide")
@@ -207,6 +206,28 @@ with st.sidebar:
     st.write(f"Total Cost: ${round(st.session_state['total_tokens_used'] * 0.06 / 1000, 2)}")
     st.divider()
     tabs = st.radio("Select Mode", ("Human-in-the-Loop", "Auto-Generation", ))
+
+# Set styling for buttons. Full column width, primary colour border.
+primaryColor = st.get_option("theme.primaryColor")
+custom_css_styling = f"""
+<style>
+    /* Style for buttons */
+    div.stButton > button:first-child, div.stDownloadButton > button:first-child {{
+        border: 5px solid {primaryColor};
+        border-radius: 20px;
+        width: 100%;
+    }}
+    /* Center align button container */
+    div.stButton, div.stDownloadButton {{
+        text-align: center;
+    }}
+    .stButton, .stDownloadButton {{
+        width: 100%;
+        padding: 0;
+    }}
+</style>
+"""
+st.html(custom_css_styling)
 
 if st.session_state.user_openai_api_key:
     # If the user has provided an API key, use it
