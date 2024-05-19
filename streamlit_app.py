@@ -9,6 +9,12 @@ import uuid
 
 st.set_page_config(page_title="Story Generator", layout="wide")
 
+os.environ["OPENAI_API_KEY"] = st.secrets["OPENAI_API_KEY"]
+os.environ["LANGCHAIN_TRACING_V2"] = "true"
+os.environ["LANGCHAIN_ENDPOINT"] = "https://api.smith.langchain.com"
+os.environ["LANGCHAIN_PROJECT"] = st.secrets["LANGCHAIN_PROJECT"]
+os.environ["LANGCHAIN_API_KEY"] = st.secrets["LANGCHAIN_API_KEY"]
+
 @st.cache_resource
 def load_sentence_transformer_model():
     return SentenceTransformer('multi-qa-mpnet-base-cos-v1')
@@ -25,25 +31,25 @@ if "session_id" not in st.session_state:
 
 if 'cache' not in st.session_state:
     st.session_state['cache'] = {}
-    
+
 if 'instruction1' not in st.session_state:
     st.session_state['instruction1'] = ""
-    
+
 if 'instruction2' not in st.session_state:
     st.session_state['instruction2'] = ""
-    
+
 if 'instruction3' not in st.session_state:
     st.session_state['instruction3'] = ""
-    
+
 if 'written_paras' not in st.session_state:
     st.session_state['written_paras'] = ""
-    
+
 if 'short_memory' not in st.session_state:
     st.session_state['short_memory'] = ""
-    
+
 if 'long_memory' not in st.session_state:
     st.session_state['long_memory'] = ""
-    
+
 if 'total_tokens_used' not in st.session_state:
     st.session_state['total_tokens_used'] = 0
 
@@ -80,7 +86,7 @@ def init(novel_type, description):
         novel_type = "Science Fiction"
     #cache = st.session_state['cache']
     # prepare first init
-    
+
     init_text = init_prompt(novel_type, description)
     init_paragraphs = get_init(text=init_text)
 
@@ -90,7 +96,7 @@ def init(novel_type, description):
         'output_memory': init_paragraphs['Summary'],
         "output_instruction": [init_paragraphs['Instruction 1'], init_paragraphs['Instruction 2'], init_paragraphs['Instruction 3']]
     }
-    
+
     cache["start_input_to_human"] = start_input_to_human
     cache["init_paragraphs"] = init_paragraphs
     st.session_state['cache'] = cache
@@ -141,7 +147,7 @@ def step(short_memory, long_memory, instruction1, instruction2, instruction3, cu
     long_memory = [[v] for v in writer.long_memory]
     #return writer.output['output_memory'], long_memory, current_paras + '\n\n' + writer.output['input_paragraph'], human.output['output_instruction'], *writer.output['output_instruction']
     return writer.output['output_memory'], parse_instructions(writer.long_memory), current_paras + '\n\n' + writer.output['input_paragraph'], *writer.output['output_instruction']
-  
+
 def controled_step(short_memory, long_memory, selected_instruction, current_paras):
     cache = st.session_state['cache']
     if current_paras == "":
@@ -174,7 +180,7 @@ def controled_step(short_memory, long_memory, selected_instruction, current_para
         human.step_with_edit()
         writer.input = human.output
         writer.step()
-        
+
     cache = st.session_state['cache']
     return writer.output['output_memory'], parse_instructions(writer.long_memory), current_paras + '\n\n' + writer.output['input_paragraph'], *writer.output['output_instruction']
 
@@ -210,7 +216,7 @@ if st.session_state.user_openai_api_key:
     openai.api_key = st.session_state.user_openai_api_key
 else:
     st.warning("Please enter your OpenAI API key", icon="⚠️")
-    
+
 if tabs == "Auto-Generation":
     novel_type = st.text_input("Novel Type", value="Science Fiction")
     description = st.text_input("Description")
@@ -224,7 +230,7 @@ if tabs == "Auto-Generation":
     st.markdown("### Memory Module")
     st.session_state.short_memory = st.text_area("Short-Term Memory (editable)", value=st.session_state.short_memory, height=100, max_chars=500, key="auto_short_memory_key")
     st.session_state.long_memory = st.text_area("Long-Term Memory (editable)", value=st.session_state.long_memory, height=200, max_chars=1000, key="auto_long_memory_key")
-    st.markdown("### Instruction Module")   
+    st.markdown("### Instruction Module")
     st.session_state.instruction1 = st.text_area("Instruction 1 (editable)", value=st.session_state.instruction1, height=100, max_chars=500, key="auto_instruction1")
     st.session_state.instruction2 = st.text_area("Instruction 2 (editable)", value=st.session_state.instruction2, height=100, max_chars=500, key="auto_instruction2")
     st.session_state.instruction3 = st.text_area("Instruction 3 (editable)", value=st.session_state.instruction3, height=100, max_chars=500, key="auto_instruction3")
@@ -234,7 +240,7 @@ if tabs == "Auto-Generation":
             with st.spinner("Thinking"):
                 st.session_state.short_memory, st.session_state.long_memory, st.session_state.written_paras, st.session_state.instruction1, st.session_state.instruction2, st.session_state.instruction3 = step(st.session_state.short_memory, st.session_state.long_memory, st.session_state.instruction1, st.session_state.instruction2, st.session_state.instruction3, st.session_state.written_paras)
                 st.rerun()
-                
+
 else:
     novel_type = st.text_input("Novel Type", value="Science Fiction")
     description = st.text_input("Description")
@@ -248,7 +254,7 @@ else:
     st.markdown("### Memory Module")
     st.session_state.short_memory = st.text_area("Short-Term Memory (editable)", height=100, max_chars=500, value=st.session_state.short_memory, key="short_memory_key")
     st.session_state.long_memory = st.text_area("Long-Term Memory (editable)", height=200, max_chars=1000, value=st.session_state.long_memory, key="long_memory_key")
-    
+
     st.markdown("### Instruction Module")
     st.session_state.instruction1 = st.text_area("Instruction 1", height=100, max_chars=500, value=st.session_state.instruction1, key="selected_instruction1", disabled=True)
     st.session_state.instruction2 = st.text_area("Instruction 2", height=100, max_chars=500, value=st.session_state.instruction2, key="selected_instruction2", disabled=True)

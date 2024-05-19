@@ -2,4 +2,4 @@ openai==0.28.1
 streamlit
 sentence-transformers
 langchain
-promptlayer
+langchain_community
