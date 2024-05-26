@@ -64,6 +64,17 @@ if 'total_tokens_used' not in st.session_state:
     st.session_state['total_tokens_used'] = 0
 
 def init_prompt(novel_type, description):
+    """
+    Create an initialization prompt for the novel generation.
+
+    Args:
+        novel_type (str): The genre of the novel.
+        description (str): A brief description of the novel.
+
+    Returns:
+        str: The formatted initialization prompt.
+    """
+    
     if description == "":
         description = ""
     else:
