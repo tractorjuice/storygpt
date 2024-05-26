@@ -27,22 +27,18 @@ Welcome to the Story Generator, a novel-writing assistant that uses advanced AI 
    cd story-generator
 
 2. Install the required dependencies:
-```bash
+   ```bash
    pip install -r requirements.txt
 
-Set up environment variables:
+3. Set up environment variables:
 
-Create a `.env` file in the root directory and add your OpenAI API key and other necessary keys:
+   Create a `.env` file in the root directory and add your OpenAI API key and other necessary keys:
 
-```env
-OPENAI_API_KEY=your_openai_api_key
-GROQ_API_KEY=your_groq_api_key
-LANGCHAIN_PROJECT=your_langchain_project
-LANGCHAIN_API_KEY=your_langchain_api_key
-
-
-
-
+   ```env
+   OPENAI_API_KEY=your_openai_api_key
+   GROQ_API_KEY=your_groq_api_key
+   LANGCHAIN_PROJECT=your_langchain_project
+   LANGCHAIN_API_KEY=your_langchain_api_key
 
 ## Usage
 
