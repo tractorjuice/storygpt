@@ -1,95 +1,89 @@
-# Story Generator
+# StoryGPT - A Novel Writing Assistant
 
-Welcome to the Story Generator, a novel-writing assistant that uses advanced AI models to help you generate and continue a story. This application leverages OpenAI's GPT models and the Sentence Transformers library to create and maintain a coherent narrative over long contexts.
+StoryGPT is a Streamlit-based application designed to assist users in generating novel-length stories using GPT models. It offers both auto-generation and human-in-the-loop modes, leveraging the capabilities of Sentence Transformers and OpenAI's GPT models.
 
 ## Features
 
-- Generate an initial novel structure and content.
-- Continue the story with automated or human-in-the-loop modes.
-- Maintain short-term and long-term memory of the narrative to ensure coherence.
-- Interactive UI built with Streamlit for easy story development.
+- **Auto-Generation Mode:** Automatically generate novel content based on user inputs.
+- **Human-in-the-Loop Mode:** Allow users to interact and guide the story generation process.
+- **Memory Modules:** Utilize short-term and long-term memory to maintain context throughout the story.
+- **Instruction Modules:** Provide multiple instructions for the next part of the story, allowing users to choose the direction.
 
-## Setup
+## Installation
 
-### Prerequisites
+1. **Clone the Repository:**
+    ```bash
+    git clone https://github.com/yourusername/storygpt.git
+    cd storygpt
+    ```
 
-- Python 3.7 or higher
-- Streamlit
-- OpenAI API key
-- Sentence Transformers library
-- Langchain library
+2. **Install Dependencies:**
+    ```bash
+    pip install -r requirements.txt
+    ```
 
-### Installation
-
-1. **Clone the repository**:
-   ```bash
-   git clone https://github.com/yourusername/story-generator.git
-   cd story-generator
-
-2. Install the required dependencies:
-   ```bash
-   pip install -r requirements.txt
-
-3. Set up environment variables:
-
-   Create a `.env` file in the root directory and add your OpenAI API key and other necessary keys:
-
-   ```env
-   OPENAI_API_KEY=your_openai_api_key
-   GROQ_API_KEY=your_groq_api_key
-   LANGCHAIN_PROJECT=your_langchain_project
-   LANGCHAIN_API_KEY=your_langchain_api_key
+3. **Set Up Environment Variables:**
+    Create a `.streamlit/secrets.toml` file with your API keys:
+    ```toml
+    [secrets]
+    OPENAI_API_KEY = "your_openai_api_key"
+    GROQ_API_KEY = "your_groq_api_key"
+    LANGCHAIN_PROJECT = "your_langchain_project"
+    LANGCHAIN_API_KEY = "your_langchain_api_key"
+    ```
 
 ## Usage
 
-### Initialize the Story
+1. **Run the Streamlit App:**
+    ```bash
+    streamlit run app.py
+    ```
 
-1. Enter the novel type and description.
-2. Click on "Initialise Novel Generation" to generate the initial structure and content.
+2. **Access the Application:**
+    Open your browser and go to `http://localhost:8501`.
 
-### Modes
+## How to Use
 
-- **Auto-Generation**: The AI generates the next part of the story automatically.
-- **Human-in-the-Loop**: You can interact with the generated content, make edits, and guide the story.
+### Auto-Generation Mode
+
+1. Enter the novel type and a brief description.
+2. Click "Initialise Novel Generation" to start.
+3. Edit the generated paragraphs, short-term memory, long-term memory, and instructions as needed.
+4. Click "Next Step" to generate the next part of the story.
 
 ### Human-in-the-Loop Mode
 
-1. **Instructions**: View and edit the generated instructions.
-2. **Memory Module**: Edit short-term and long-term memory to maintain context.
-3. **Next Step**: Select the next step, edit instructions if necessary, and proceed.
+1. Enter the novel type and a brief description.
+2. Click "Initialise Novel Generation" to start.
+3. Review the generated paragraphs and memory modules.
+4. Choose from the provided instructions for the next part of the story.
+5. Click "Next Step" to generate the next part of the story.
 
-## Code Overview
+## Customization
 
-### app.py
+### Custom CSS
 
-Main Streamlit app file. Handles UI and user interactions, initializes the story, and processes steps for both auto-generation and human-in-the-loop modes.
+The application includes custom CSS for styling buttons. You can modify the `custom_css_styling` variable in `app.py` to change the button styles.
 
-### utils.py
+### Changing the GPT Model
 
-Utility functions for interacting with the OpenAI API, parsing responses, and managing content.
+By default, the application uses `gpt-3.5-turbo-16k-0613`. You can change this by modifying the `MODEL` variable in `utils.py`.
 
-### recurrentgpt.py
+## Contributing
 
-Defines the `RecurrentGPT` class which interacts with the GPT model to generate and continue story content. Manages short-term and long-term memory.
-
-### human_simulator.py
-
-Defines the `Human` class which simulates human input in the story generation process. Handles extending paragraphs and revising plans.
-
-
-## Examples
-
-### Initialize a Novel
-
-1. Enter "Science Fiction" as the novel type.
-2. Enter "A journey through space" as the description.
-3. Click "Initialise Novel Generation".
-
-### Continue the Story
-
-1. In Auto-Generation mode, click "Next Step" to automatically generate the next part.
-2. In Human-in-the-Loop mode, select and edit the instructions, update memories, and click "Next Step".
+Contributions are welcome! Please open an issue or submit a pull request for any improvements or bug fixes.
 
 ## License
 
-This project is licensed under the MIT License.
+This project is licensed under the MIT License. See the `LICENSE` file for more details.
+
+## Acknowledgements
+
+- [Streamlit](https://streamlit.io/)
+- [Sentence Transformers](https://www.sbert.net/)
+- [OpenAI](https://www.openai.com/)
+- [LangChain](https://langchain.com/)
+
+## Contact
+
+Developed by [Mark Craddock](https://twitter.com/mcraddock). For questions or feedback, reach out on Twitter or open an issue on GitHub.

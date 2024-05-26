@@ -200,8 +200,7 @@ with st.sidebar:
     st.divider()
     st.markdown("Developed by Mark Craddock](https://twitter.com/mcraddock)", unsafe_allow_html=True)
     st.markdown("Current Version: 1.0.0")
-    st.markdown("Using gpt-3.5-turbo-16k-0613 API")
-    # Check if the user has provided an API key, otherwise default to the secret
+    st.markdown("Using gpt-4o API")
     st.sidebar.markdown(st.session_state.session_id)
     st.sidebar.divider()
     st.session_state.user_openai_api_key = st.sidebar.text_input("Enter your OpenAI API Key:", placeholder="sk-...", type="password")
