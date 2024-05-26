@@ -6,6 +6,17 @@ from langchain.schema import AIMessage, HumanMessage, SystemMessage
 MODEL = "gpt-4o"
 
 def get_api_response(content: str, max_tokens=None):
+    """
+    Get a response from the OpenAI API.
+
+    Args:
+        content (str): The input content for the API.
+        max_tokens (int, optional): The maximum number of tokens for the response.
+
+    Returns:
+        str: The API response.
+    """
+
     chat = ChatOpenAI(
         openai_api_key=st.session_state.user_openai_api_key,
         model=MODEL,
@@ -29,9 +40,33 @@ def get_api_response(content: str, max_tokens=None):
         return "Error: response not found"
 
 def get_content_between_a_b(a, b, text):
+    """
+    Extract content between two markers.
+
+    Args:
+        a (str): The starting marker.
+        b (str): The ending marker.
+        text (str): The text to search within.
+
+    Returns:
+        str: The extracted content.
+    """
+
     return re.search(f"{a}(.*?)\n{b}", text, re.DOTALL).group(1).strip()
 
 def get_init(init_text=None,text=None,response_file=None):
+    """
+    Get the initial paragraphs and instructions from the API response.
+
+    Args:
+        init_text (str, optional): Initial text for the API.
+        text (str, optional): Additional text for the API.
+        response_file (str, optional): File to save the API response.
+
+    Returns:
+        dict: A dictionary with the initial paragraphs and instructions.
+    """
+
     if not init_text:
         response = get_api_response(text)
 
@@ -82,6 +117,16 @@ def get_init(init_text=None,text=None,response_file=None):
     return paragraphs
 
 def parse_instructions(instructions):
+    """
+    Parse a list of instructions into a formatted string.
+
+    Args:
+        instructions (list): A list of instructions.
+
+    Returns:
+        str: A formatted string of instructions.
+    """
+
     output = ""
     for i in range(len(instructions)):
         output += f"{i+1}. {instructions[i]}\n"

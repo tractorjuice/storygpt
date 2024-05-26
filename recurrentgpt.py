@@ -5,8 +5,22 @@ import random
 from sentence_transformers import util
 
 class RecurrentGPT:
+    """
+    A class to represent the recurrent GPT model for generating novel content.
+    """
 
     def __init__(self, input, short_memory, long_memory, memory_index, embedder):
+        """
+        Initialize the RecurrentGPT instance.
+
+        Args:
+            input (dict): The input data for the model.
+            short_memory (str): The short-term memory of the story.
+            long_memory (list): The long-term memory of the story.
+            memory_index (tensor): The memory index tensor.
+            embedder (SentenceTransformer): The sentence transformer model.
+        """
+
         self.input = input
         self.short_memory = short_memory
         self.long_memory = long_memory
@@ -17,6 +31,16 @@ class RecurrentGPT:
         self.output = {}
 
     def prepare_input(self, new_character_prob=0.1, top_k=2):
+        """
+        Prepare the input text for the GPT model.
+
+        Args:
+            new_character_prob (float, optional): Probability of introducing a new character.
+            top_k (int, optional): Number of top paragraphs to consider from memory.
+
+        Returns:
+            str: The prepared input text.
+        """
 
         input_paragraph = self.input["output_paragraph"]
         input_instruction = self.input["output_instruction"]
@@ -39,14 +63,14 @@ class RecurrentGPT:
         else:
             new_character_prompt = ""
 
-        input_text = f"""I need you to help me write a novel. Now I give you a memory (a brief summary) of 400 words, you should use it to store the key content of what has been written so that you can keep track of very long context. For each time, I will give you your current memory (a brief summary of previous stories. You should use it to store the key content of what has been written so that you can keep track of very long context), the previously written paragraph, and instructions on what to write in the next paragraph. 
+        input_text = f"""I need you to help me write a novel. Now I give you a memory (a brief summary) of 400 words, you should use it to store the key content of what has been written so that you can keep track of very long context. For each time, I will give you your current memory (a brief summary of previous stories. You should use it to store the key content of what has been written so that you can keep track of very long context), the previously written paragraph, and instructions on what to write in the next paragraph.
     I need you to write:
     1. Output Paragraph: the next paragraph of the novel. The output paragraph should contain around 20 sentences and should follow the input instructions.
     2. Output Memory: The updated memory. You should first explain which sentences in the input memory are no longer necessary and why, and then explain what needs to be added into the memory and why. After that you should write the updated memory. The updated memory should be similar to the input memory except the parts you previously thought that should be deleted or added. The updated memory should only store key information. The updated memory should never exceed 20 sentences!
     3. Output Instruction:  instructions of what to write next (after what you have written). You should output 3 different instructions, each is a possible interesting continuation of the story. Each output instruction should contain around 5 sentences
-    Here are the inputs: 
+    Here are the inputs:
 
-    Input Memory:  
+    Input Memory:
     {self.short_memory}
 
     Input Paragraph:
@@ -57,30 +81,40 @@ class RecurrentGPT:
 
     Input Related Paragraphs:
     {input_long_term_memory}
-    
+
     Now start writing, organize your output by strictly following the output format as below:
-    Output Paragraph: 
+    Output Paragraph:
     <string of output paragraph>, around 20 sentences.
 
-    Output Memory: 
+    Output Memory:
     Rational: <string that explain how to update the memory>;
     Updated Memory: <string of updated memory>, around 10 to 20 sentences
 
-    Output Instruction: 
+    Output Instruction:
     Instruction 1: <content for instruction 1>, around 5 sentences
     Instruction 2: <content for instruction 2>, around 5 sentences
     Instruction 3: <content for instruction 3>, around 5 sentences
 
     Very important!! The updated memory should only store key information. The updated memory should never contain over 500 words!
-    Finally, remember that you are writing a novel. Write like a novelist and do not move too fast when writing the output instructions for the next paragraph. Remember that the chapter will contain over 10 paragraphs and the novel will contain over 100 chapters. And this is just the begining. Just write some interesting staffs that will happen next. Also, think about what plot can be attractive for common readers when writing output instructions. 
+    Finally, remember that you are writing a novel. Write like a novelist and do not move too fast when writing the output instructions for the next paragraph. Remember that the chapter will contain over 10 paragraphs and the novel will contain over 100 chapters. And this is just the begining. Just write some interesting staffs that will happen next. Also, think about what plot can be attractive for common readers when writing output instructions.
 
-    Very Important: 
-    You should first explain which sentences in the input memory are no longer necessary and why, and then explain what needs to be added into the memory and why. After that, you start rewrite the input memory to get the updated memory. 
+    Very Important:
+    You should first explain which sentences in the input memory are no longer necessary and why, and then explain what needs to be added into the memory and why. After that, you start rewrite the input memory to get the updated memory.
     {new_character_prompt}
     """
         return input_text
 
     def parse_output(self, output):
+        """
+        Parse the output from the GPT model.
+
+        Args:
+            output (str): The output text from the GPT model.
+
+        Returns:
+            dict: A dictionary containing the parsed output.
+        """
+
         try:
             output_paragraph = get_content_between_a_b(
                 'Output Paragraph:', 'Output Memory', output)
@@ -113,10 +147,16 @@ class RecurrentGPT:
             return None
 
     def step(self, response_file=None):
+        """
+        Generate the next part of the story.
+
+        Args:
+            response_file (str, optional): File to save the API response.
+        """
 
         prompt = self.prepare_input()
         response = get_api_response(prompt)
-        
+
         self.output = self.parse_output(response)
         while self.output == None:
             response = get_api_response(prompt)

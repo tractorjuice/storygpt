@@ -17,6 +17,13 @@ os.environ["LANGCHAIN_API_KEY"] = st.secrets["LANGCHAIN_API_KEY"]
 
 @st.cache_resource
 def load_sentence_transformer_model():
+    """
+    Load the SentenceTransformer model only once for semantic search.
+
+    Returns:
+        SentenceTransformer: A pre-trained SentenceTransformer model.
+    """
+
     return SentenceTransformer('multi-qa-mpnet-base-cos-v1')
 
 # Load the model only once
@@ -84,6 +91,17 @@ Make sure to be precise and follow the output format strictly.
 """
 
 def init(novel_type, description):
+    """
+    Initialize the prompt for the novel generation based on the novel type and description.
+
+    Args:
+        novel_type (str): The genre or type of the novel.
+        description (str): A brief description of the novel.
+
+    Returns:
+        str: The formatted initialization prompt.
+    """
+
     written_paras = ""
     if novel_type == "":
         novel_type = "Science Fiction"
@@ -113,6 +131,21 @@ Paragraphs:
     return start_input_to_human['output_memory'], long_memory, written_paras, init_paragraphs['Instruction 1'], init_paragraphs['Instruction 2'], init_paragraphs['Instruction 3']
 
 def step(short_memory, long_memory, instruction1, instruction2, instruction3, current_paras):
+    """
+    Generate the next part of the novel.
+
+    Args:
+        short_memory (str): Short-term memory context.
+        long_memory (str): Long-term memory context.
+        instruction1 (str): First instruction for the next part of the story.
+        instruction2 (str): Second instruction for the next part of the story.
+        instruction3 (str): Third instruction for the next part of the story.
+        current_paras (str): Current paragraphs of the novel.
+
+    Returns:
+        tuple: Updated short memory, long memory, current paragraphs, and three instructions.
+    """
+
     cache = st.session_state['cache']
     if current_paras == "":
         return "", "", "", "", "", ""
@@ -152,6 +185,19 @@ def step(short_memory, long_memory, instruction1, instruction2, instruction3, cu
     return writer.output['output_memory'], parse_instructions(writer.long_memory), current_paras + '\n\n' + writer.output['input_paragraph'], *writer.output['output_instruction']
 
 def controled_step(short_memory, long_memory, selected_instruction, current_paras):
+    """
+    Generate the next part of the novel with controlled instruction.
+
+    Args:
+        short_memory (str): Short-term memory context.
+        long_memory (str): Long-term memory context.
+        selected_instruction (str): The selected instruction for the next part of the story.
+        current_paras (str): Current paragraphs of the novel.
+
+    Returns:
+        tuple: Updated short memory, long memory, current paragraphs, and three instructions.
+    """
+
     cache = st.session_state['cache']
     if current_paras == "":
         return "", "", "", "", "", ""
@@ -189,6 +235,19 @@ def controled_step(short_memory, long_memory, selected_instruction, current_para
 
 
 def on_select(instruction1, instruction2, instruction3, value):
+    """
+    Select the instruction based on user choice.
+
+    Args:
+        instruction1 (str): The first instruction.
+        instruction2 (str): The second instruction.
+        instruction3 (str): The third instruction.
+        value (str): The selected instruction label.
+
+    Returns:
+        str: The selected instruction.
+    """
+
     selected_plan = int(value.replace("Instruction ", ""))
     selected_plan = [instruction1, instruction2, instruction3][selected_plan-1]
     return selected_plan
