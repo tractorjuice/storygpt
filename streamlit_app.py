@@ -9,6 +9,7 @@ import uuid, os
 st.set_page_config(page_title="Story Generator", layout="wide")
 
 os.environ["OPENAI_API_KEY"] = st.secrets["OPENAI_API_KEY"]
+os.environ["GROQ_API_KEY"] = st.secrets["GROQ_API_KEY"]
 os.environ["LANGCHAIN_TRACING_V2"] = "true"
 os.environ["LANGCHAIN_ENDPOINT"] = "https://api.smith.langchain.com"
 os.environ["LANGCHAIN_PROJECT"] = st.secrets["LANGCHAIN_PROJECT"]
@@ -24,6 +25,9 @@ embedder = load_sentence_transformer_model()
 
 if "user_openai_api_key" not in st.session_state:
     st.session_state.user_openai_api_key = None
+
+if "user_groq_api_key" not in st.session_state:
+    st.session_state.user_groq_api_key = None
 
 if "session_id" not in st.session_state:
     st.session_state.session_id = str(uuid.uuid4())
@@ -83,7 +87,7 @@ def init(novel_type, description):
     written_paras = ""
     if novel_type == "":
         novel_type = "Science Fiction"
-    #cache = st.session_state['cache']
+
     # prepare first init
 
     init_text = init_prompt(novel_type, description)
@@ -231,7 +235,6 @@ st.html(custom_css_styling)
 
 if st.session_state.user_openai_api_key:
     # If the user has provided an API key, use it
-    # Swap out openai for promptlayer
     openai.api_key = st.session_state.user_openai_api_key
 else:
     st.warning("Please enter your OpenAI API key", icon="⚠️")
