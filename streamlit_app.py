@@ -8,7 +8,7 @@ import uuid, os
 
 st.set_page_config(page_title="Story Generator", layout="wide")
 
-os.environ["OPENAI_API_KEY"] = st.secrets["OPENAI_API_KEY"]
+#os.environ["OPENAI_API_KEY"] = st.secrets["OPENAI_API_KEY"]
 os.environ["GROQ_API_KEY"] = st.secrets["GROQ_API_KEY"]
 os.environ["LANGCHAIN_TRACING_V2"] = "true"
 os.environ["LANGCHAIN_ENDPOINT"] = "https://api.smith.langchain.com"
@@ -74,7 +74,7 @@ def init_prompt(novel_type, description):
     Returns:
         str: The formatted initialization prompt.
     """
-    
+
     if description == "":
         description = ""
     else:
@@ -304,7 +304,8 @@ st.html(custom_css_styling)
 
 if st.session_state.user_openai_api_key:
     # If the user has provided an API key, use it
-    openai.api_key = st.session_state.user_openai_api_key
+    #openai.api_key = st.session_state.user_openai_api_key
+    os.environ["OPENAI_API_KEY"] = st.session_state.user_openai_api_key
 else:
     st.warning("Please enter your OpenAI API key", icon="⚠️")
 
