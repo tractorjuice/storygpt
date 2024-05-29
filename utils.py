@@ -2,6 +2,7 @@ import re, os
 import streamlit as st
 from langchain.chat_models import ChatOpenAI
 from langchain.schema import AIMessage, HumanMessage, SystemMessage
+import openai
 
 MODEL = "gpt-4o"
 
